@@ -240,7 +240,17 @@
             .date-item {
                 border: 1px solid #333333;
                 padding: 12px;
+                border-radius: 10px;
                 
+            }
+            .table {
+                border-collapse: collapse;
+            }
+            .table th {
+                border: 1px solid #333333;
+            }
+            .table td {
+                border: 1px solid #333333;
             }
             .date-item .date-label {
                 border-bottom: 1px solid #333333;
@@ -251,20 +261,22 @@
             </style>
             <!-- Footer Section -->
             <div class="card-footer">
-                <div class="date-item">
+                <div class="date-item table">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>TM LEADS SP</th>
-                                    <th>DEALS</th>
-                                    <th>AVERAGE</th>
+                                    <th colspan="3">TM LEADS SP</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>TM LEADS SP</td>
+                                    
                                     <td>DEALS</td>
+                                    <td>23</td>
+                                </tr>
+                                <tr>
                                     <td>AVERAGE</td>
+                                    <td>$17,500</td>
                                 </tr>
                         </table>
                 </div>
