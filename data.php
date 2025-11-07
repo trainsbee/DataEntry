@@ -8,11 +8,13 @@
 
 :root {
   /* Fondo: negro mate puro (como el aluminio del MacBook) */
-  --bg-primary: #000000;
-  --bg-card: #1c1c1e;
-  --bg-input: #2c2c2e;
-  --border: #3a3a3c;
+  --bg-primary: #121212;
+  --bg-card: #1f1f1f;
+  --bg-input: #fafafa07;
+  --border: #2e2e2e;
   --border-light: #48484a;
+
+  --border-control: #393939;
 
   /* Texto */
   --text-primary: #f5f5f7;
@@ -89,7 +91,8 @@ body {
 .navbar {
   background-color: var(--bg-card);
   padding: 1rem 2rem;
-  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
+  border-bottom: 2px solid var(--border);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -107,7 +110,6 @@ body {
 .nav-tabs {
   display: flex;
   gap: 0;
-  border-bottom: 1px solid var(--border);
 }
 
 .nav-tab {
@@ -285,8 +287,8 @@ body {
 }
 
 .stat-card {
-  background-color: var(--bg-input);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-control);
+  border-style: dashed;
   border-radius: var(--radius);
   padding: 1.5rem;
   display: flex;
@@ -572,18 +574,18 @@ body {
             </div>
 
             <!-- Status Badge -->
-            <div class="status-badge">
+            <!-- <div class="status-badge">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #a78bfa;">
                     <path d="M12 2L15.09 8.26H22L17.17 12.88L19.34 19.12L12 15.77L4.66 19.12L6.83 12.88L2 8.26H8.91L12 2Z"></path>
                 </svg>
                 <span>Environment hibernating</span>
-            </div>
+            </div> -->
 
             <!-- Alert Card -->
-            <div class="alert-card">
+            <!-- <div class="alert-card">
                 <p class="alert-text">Your environment has been scaled to zero for <strong>26hrs 32mins</strong>.</p>
                 <button class="wake-up-btn">Wake up</button>
-            </div>
+            </div> -->
         </div>
     </nav>
 
@@ -755,24 +757,7 @@ navTabs.forEach((tab) => {
   })
 })
 
-// Wake Up Button
-const wakeUpBtn = document.querySelector(".wake-up-btn")
-if (wakeUpBtn) {
-  wakeUpBtn.addEventListener("click", () => {
-    console.log("[v0] Wake up button clicked")
-    const alertCard = document.querySelector(".alert-card")
-    alertCard.style.opacity = "0.6"
-    wakeUpBtn.textContent = "Waking up..."
-    wakeUpBtn.disabled = true
 
-    setTimeout(() => {
-      alertCard.style.opacity = "1"
-      wakeUpBtn.textContent = "Wake up"
-      wakeUpBtn.disabled = false
-      console.log("[v0] Environment woken up")
-    }, 2000)
-  })
-}
 
 // Sidebar Buttons
 const sidebarBtns = document.querySelectorAll(".sidebar-btn")
