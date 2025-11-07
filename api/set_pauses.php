@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../db.php';
+require_once __DIR__ . '/../supabase/users.php';
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
