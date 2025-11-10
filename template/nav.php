@@ -1,4 +1,23 @@
-    <!-- Header -->
+<div id="navbar-container"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const navbarContainer = document.getElementById('navbar-container');
+
+    // Si no hay usuario autenticado, redirigir a la página de autenticación
+    if (!currentUser) {
+        window.location.href = 'auth.php';
+        return;
+    }
+
+    const isAdmin = currentUser.role === 'admin';
+
+    // Detectar la página actual (sin PHP)
+    const currentPage = window.location.pathname.split('/').pop();
+
+    // Construcción dinámica del menú
+    let navbarHTML = `
     <header class="header">
         <div class="header-container">
             <div class="header-left">
@@ -12,43 +31,50 @@
         <p class="header-description">Hibernation kicks in to save costs when requests are low. Your app will wake up automatically when traffic returns.</p>
     </header>
 
-    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-tabs">
-                <?php 
-                $current_page = basename($_SERVER['REQUEST_URI']);
-                ?>
-                <a href="dashboard.php" class="nav-tab <?php echo $current_page == 'dashboard.php' ? 'active' : ''; ?>" data-tab="overview">
+                <a href="dashboard.php" class="nav-tab ${currentPage === 'dashboard.php' ? 'active' : ''}">
                     <i data-feather="grid"></i>
                     <span>Overview</span>
-                </a>
-                <a href="logs.php" class="nav-tab <?php echo $current_page == 'logs.php' ? 'active' : ''; ?>" data-tab="logs">
+                </a>`;
+
+    // Agregar "Pausas" solo si es admin
+    if (isAdmin) {
+        navbarHTML += `
+                <a href="pauses.php" class="nav-tab ${currentPage === 'pauses.php' ? 'active' : ''}">
+                    <i data-feather="clock"></i>
+                    <span>Pausas</span>
+                </a>`;
+    }
+
+    // Agregar el resto de tabs
+    navbarHTML += `
+                <a href="logs.php" class="nav-tab ${currentPage === 'logs.php' ? 'active' : ''}">
                     <i data-feather="list"></i>
                     <span>Logs</span>
                 </a>
-                <a href="metrics.php" class="nav-tab <?php echo $current_page == 'metrics.php' ? 'active' : ''; ?>" data-tab="metrics">
+                <a href="metrics.php" class="nav-tab ${currentPage === 'metrics.php' ? 'active' : ''}">
                     <i data-feather="bar-chart-2"></i>
                     <span>Metrics</span>
                 </a>
-                <a href="averages.php" class="nav-tab <?php echo $current_page == 'averages.php' ? 'active' : ''; ?>" data-tab="averages">
+                <a href="averages.php" class="nav-tab ${currentPage === 'averages.php' ? 'active' : ''}">
                     <i data-feather="bar-chart-2"></i>
                     <span>Averages</span>
                 </a>
             </div>
-
-            <!-- Status Badge -->
-            <!-- <div class="status-badge">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #a78bfa;">
-                    <path d="M12 2L15.09 8.26H22L17.17 12.88L19.34 19.12L12 15.77L4.66 19.12L6.83 12.88L2 8.26H8.91L12 2Z"></path>
-                </svg>
-                <span>Environment hibernating</span>
-            </div> -->
-
-            <!-- Alert Card -->
-            <!-- <div class="alert-card">
-                <p class="alert-text">Your environment has been scaled to zero for <strong>26hrs 32mins</strong>.</p>
-                <button class="wake-up-btn">Wake up</button>
-            </div> -->
         </div>
-    </nav>
+    </nav>`;
+
+    navbarContainer.innerHTML = navbarHTML;
+
+    // Reemplazar iconos Feather
+    feather.replace();
+});
+
+// Cerrar sesión
+function logout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'auth.php';
+}
+</script>

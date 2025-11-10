@@ -17,100 +17,118 @@
 
           <!-- NAVBAR -->
 
-<div class="admin-content">
-            <div class="card pauses">
+           
                
-                  <div class="form-container form-switch">
-            <div class="form-header">
-                <h2><i data-feather="pause"></i> Administrador de Pausas</h2>
-            </div>
-            <div class="form-body">
-                <p id="message-time-pause" style="font-size: 0.875rem; margin-bottom: 1rem;">
-                    Puedes crear tus pausas aquí, recuerda organizarte bien para que no te quedes sin pausa (:
-                </p>
-            </div>
-            <div class="form-footer" id="footer-switch">
-               <div class="form-group">
-                  <select id="reason" required>
-                  <option value="" disabled selected>Selecciona una razón</option>
-                  <option value="break">Break 15 minutos</option>
-                  <option value="lunch">Almuerzo</option>
-                  <option value="bathroom_outside">Baño afuera</option>
-                  <option value="bathroom_office">Baño oficina</option>
-                  <option value="meeting_manager">Reunión con gerente</option>
-                  <option value="meeting_rrhh">Reunión con RRHH</option>
-                  <option value="meeting_country_manager">Reunión con gerente de país</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                    <label class="switch">
-                        <input type="checkbox" id="pause-switch" onchange="togglePause()">
-                        <span class="slider"></span>
-                    </label>
-                    <span id="switch-status" class="switch-status inactive"></span>
-                </div>
-            </div>
-                   
-                </div>
-          <div class="profile time-pauses">
-          <div class="form-container">
-            <div class="form-header">
-                <h3>Stadistics</h3>
-                <div class="info-row">
-                    <div class="box">
-                      <h4 id="total-pauses">0</h4>
-                      <p>Pausas activas</p>
-                    </div>
-                    <div class="box">
-                      <h4 id="total-pause-time">0</h4>
-                      <p>Tiempo consumido</p>
-                    </div>
-                    <div class="box">
-                      <h4 id="total-remaining-time">0</h4>
-                      <p>Tiempo restante</p>
-                    </div>
-              </div>
-            </div>
-            <form class="filter-date range-container" id="filter-form">
-                <div class="form-body">
-                    <div class="form-group">
-                        <label>FROM</label>
-                        <input type="date" value="<?php 
-                        $today = new DateTime('now', new DateTimeZone(TIMEZONE));
-                        echo $today->format('Y-m-d');
-                        ?>" id="start-date">
-                    </div>
-                    <div class="form-group">
-                        <label>TO</label>
-                        <input type="date" value="<?php 
-                        $today = new DateTime('now', new DateTimeZone(TIMEZONE));
-                        echo $today->format('Y-m-d');
-                        ?>" id="end-date">
-                    </div>
-                </div>
-                <div class="form-footer">
-                    <button type="submit" class="filter-button">
-                        <i data-feather="filter" style="width: 1rem; height: 1rem;"></i>
-                        Filtrar
-                    </button>
-                </div>
-            </form>
+          <div class="form-container form-switch">
+    <div class="form-header">
+        <h2><i data-feather="pause"></i> Administrador de Pausas</h2>
+    </div>
+    <div class="form-body">
+        <p id="message-time-pause">
+            Puedes crear tus pausas aquí, recuerda organizarte bien para que no te quedes sin pausa (:
+        </p>
+    </div>
+    <div class="form-footer" id="footer-switch">
+        <div class="form-group">
+            <label for="reason">Razón de la pausa</label>
+            <select id="reason" required>
+                <option value="" disabled selected>Selecciona una razón</option>
+                <option value="break">Break 15 minutos</option>
+                <option value="lunch">Almuerzo</option>
+                <option value="bathroom_outside">Baño afuera</option>
+                <option value="bathroom_office">Baño oficina</option>
+                <option value="meeting_manager">Reunión con gerente</option>
+                <option value="meeting_rrhh">Reunión con RRHH</option>
+                <option value="meeting_country_manager">Reunión con gerente de país</option>
+            </select>
         </div>
-</div>
-<style>
 
-</style>
-<div class="box-pause">
-  <div class="loader">
-    <span class="spinner1"></span>
-    <span class="spinner2"></span>
-    <span class="spinner3"></span>
-  </div>
-  <div id="pause-list"></div>
+        <div class="form-group" style="align-items: center; flex-direction: row; gap: 1rem;">
+            <label class="switch">
+                <input type="checkbox" id="pause-switch" onchange="togglePause()">
+                <span class="slider"></span>
+            </label>
+            <span id="switch-status" class="switch-status inactive">Inactiva</span>
+        </div>
+    </div>
 </div>
+                  <div id="metrics" class="tab-content">
+                    <div class="metrics-container">
+                        <div class="metric-box">
+                            <h3 class="metric-title">Costs Saved</h3>
+                            <p class="metric-value" id="total-pauses">$12.45</p>
+                            <p class="metric-desc">In the last 7 days</p>
+                        </div>
+                        <div class="metric-box">
+                            <h3 class="metric-title">Hibernations</h3>
+                            <p class="metric-value" id="total-pause-time">8</p>
+                            <p class="metric-desc">This month</p>
+                        </div>
+                        <div class="metric-box">
+                            <h3 class="metric-title">Avg Duration</h3>
+                            <p class="metric-value" id="total-remaining-time">18h 24m</p>
+                            <p class="metric-desc">Per hibernation</p>
+                        </div>
+                    </div>
+                </div>
+     <div class="card-filter">
+    <div class="form-header">
+        <h3>Estadísticas por Fecha</h3>
+    </div>
+
+    <form class="filter-date range-container" id="filter-form">
+        <div class="form-body">
+            <div class="form-group">
+                <label for="start-date">Desde</label>
+                <input type="date" id="start-date" value="<?php 
+                    $today = new DateTime('now', new DateTimeZone(TIMEZONE));
+                    echo $today->format('Y-m-d');
+                ?>">
+            </div>
+            <div class="form-group">
+                <label for="end-date">Hasta</label>
+                <input type="date" id="end-date" value="<?php 
+                    $today = new DateTime('now', new DateTimeZone(TIMEZONE));
+                    echo $today->format('Y-m-d');
+                ?>">
+            </div>
+        </div>
+        <div class="form-footer">
+            <button type="submit" class="filter-button">
+                <i data-feather="filter"></i>
+                Filtrar
+            </button>
+        </div>
+    </form>
 </div>
-          <div class="card">
+
+                <div id="logs" class="tab-content">
+                    <div class="loader">
+                      <span class="spinner1"></span>
+                      <span class="spinner2"></span>
+                      <span class="spinner3"></span>
+                    </div>
+                    <div class="logs-list" id="pause-list">
+                        <div class="log-entry">
+                            <span class="log-time">14:32:18</span>
+                            <span class="log-status info">INFO</span>
+                            <span class="log-message">Environment hibernated successfully</span>
+                        </div>
+                        <div class="log-entry">
+                            <span class="log-time">14:32:05</span>
+                            <span class="log-status warning">WARNING</span>
+                            <span class="log-message">Scaling down resources</span>
+                        </div>
+                        <div class="log-entry">
+                            <span class="log-time">14:31:50</span>
+                            <span class="log-status info">INFO</span>
+                            <span class="log-message">No requests detected in last 5 minutes</span>
+                        </div>
+                    </div>
+                </div>
+
+</div>
+          <div class="card" hidden>
                 <h3>Actividad <span id="user-name"></span> <span id="user-role"></span><span id="user-department"></span></h3>
               <div class="info-row">
                     <span class="info-label">Sesiones hoy:</span>
@@ -121,10 +139,8 @@
                     <span class="info-value">28</span>
                 </div>
             </div>
-        </div>
-  </div>
-
-
+   
+ 
 
                 </div>
                  <!-- Sidebar -->
@@ -419,9 +435,9 @@
 
         const totalPauseTime = `${hours}h ${minutes}m ${seconds}s`;
         const totalPauseElementTwo = document.getElementById('message-time-pause');
-        let TimeAuthorized = 15;
+        let TimeAuthorized = 90;
         // Restar 15 minutos de la pausa total
-        let totalPauseTimeAuthorized = 15 * 60 - totalSeconds;
+        let totalPauseTimeAuthorized = 90 * 60 - totalSeconds;
         let hoursAuthorized = Math.floor(totalPauseTimeAuthorized / 3600);
         let minutesAuthorized = Math.floor((totalPauseTimeAuthorized % 3600) / 60);
         let secondsAuthorized = Math.floor(totalPauseTimeAuthorized % 60);
@@ -519,7 +535,7 @@
           dailyPauses.forEach(pause => {
             //CREA UNA CAJA PARA CADA PAUSA
             const card = document.createElement('div');
-            card.className = `profile ${!pause.end_time ? 'in-progress' : ''}`;
+            card.className = `log-entry ${!pause.end_time ? 'in-progress' : ''}`;
 
             let endText = '';
             let durationText = '';
