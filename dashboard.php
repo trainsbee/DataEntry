@@ -23,7 +23,7 @@
     <div class="form-header">
         <h2><i data-feather="pause"></i> Administrador de Pausas</h2>
     </div>
-    <div class="form-body">
+    <div class="form-body body-update">
         <p id="message-time-pause">
             Puedes crear tus pausas aquí, recuerda organizarte bien para que no te quedes sin pausa (:
         </p>
@@ -43,7 +43,7 @@
             </select>
         </div>
 
-        <div class="form-group" style="align-items: center; flex-direction: row; gap: 1rem;">
+        <div class="form-group">
             <label class="switch">
                 <input type="checkbox" id="pause-switch" onchange="togglePause()">
                 <span class="slider"></span>
@@ -55,19 +55,19 @@
                   <div id="metrics" class="tab-content">
                     <div class="metrics-container">
                         <div class="metric-box">
-                            <h3 class="metric-title">Costs Saved</h3>
-                            <p class="metric-value" id="total-pauses">$12.45</p>
-                            <p class="metric-desc">In the last 7 days</p>
+                            <h3 class="metric-title">Pausas</h3>
+                            <p class="metric-value" id="total-pauses"></p>
+                            <p class="metric-desc">Total de pausas</p>
                         </div>
                         <div class="metric-box">
-                            <h3 class="metric-title">Hibernations</h3>
-                            <p class="metric-value" id="total-pause-time">8</p>
-                            <p class="metric-desc">This month</p>
+                            <h3 class="metric-title">Tiempo en pausa</h3>
+                            <p class="metric-value" id="total-pause-time"></p>
+                            <p class="metric-desc">Total de tiempo en pausa</p>
                         </div>
                         <div class="metric-box">
-                            <h3 class="metric-title">Avg Duration</h3>
-                            <p class="metric-value" id="total-remaining-time">18h 24m</p>
-                            <p class="metric-desc">Per hibernation</p>
+                            <h3 class="metric-title">Tiempo restante</h3>
+                            <p class="metric-value" id="total-remaining-time"></p>
+                            <p class="metric-desc">Tiempo restante</p>
                         </div>
                     </div>
                 </div>
@@ -109,21 +109,7 @@
                       <span class="spinner3"></span>
                     </div>
                     <div class="logs-list" id="pause-list">
-                        <div class="log-entry">
-                            <span class="log-time">14:32:18</span>
-                            <span class="log-status info">INFO</span>
-                            <span class="log-message">Environment hibernated successfully</span>
-                        </div>
-                        <div class="log-entry">
-                            <span class="log-time">14:32:05</span>
-                            <span class="log-status warning">WARNING</span>
-                            <span class="log-message">Scaling down resources</span>
-                        </div>
-                        <div class="log-entry">
-                            <span class="log-time">14:31:50</span>
-                            <span class="log-status info">INFO</span>
-                            <span class="log-message">No requests detected in last 5 minutes</span>
-                        </div>
+                       
                     </div>
                 </div>
 
@@ -340,10 +326,12 @@
       if (isActive) {
       //   switchStatus.textContent = 'Activa';
         switchStatus.className = 'switch-status active';
+        switchStatus.textContent = 'Activa';
         reasonSelect.disabled = true;
       } else {
         // switchStatus.textContent = 'Inactiva';
         switchStatus.className = 'switch-status inactive';
+        switchStatus.textContent = 'Inactiva';
         reasonSelect.disabled = false;
         reasonSelect.value = '';
       }
@@ -364,7 +352,7 @@
         loader.style.opacity = '0';
         setTimeout(() => {
           loader.style.display = 'none';
-          pauseList.style.display = 'block';
+          pauseList.style.display = 'grid';
         }, 400);
       }
     }
@@ -435,7 +423,8 @@
 
         const totalPauseTime = `${hours}h ${minutes}m ${seconds}s`;
         const totalPauseElementTwo = document.getElementById('message-time-pause');
-        let TimeAuthorized = 90;
+        const bodyUpdate = document.querySelector('.body-update');
+        let TimeAuthorized = 80;
         // Restar 15 minutos de la pausa total
         let totalPauseTimeAuthorized = 90 * 60 - totalSeconds;
         let hoursAuthorized = Math.floor(totalPauseTimeAuthorized / 3600);
@@ -461,25 +450,26 @@
         });
           
           const totalPauseTimeConsumed = `${hoursConsumed}h ${minutesConsumed}m ${secondsConsumed}s`;
-          const totalPauseElementConsumed = document.getElementById('message-time-pause-consumed');
          
           
 
 
-        if (totalSeconds < 15 * 60) {
-          totalPauseElementTwo.className = 'total-pause-time-two clr-success';
-          totalPauseElementTwo.textContent = `Hoy has estado en pausa: ${totalPauseTime} - Excelente`;
-         
-        } else if (totalSeconds >= 15 * 60 && totalSeconds < 40 * 60) {
-          totalPauseElementTwo.className = 'total-pause-time-two clr-warning';
-          totalPauseElementTwo.textContent = `Tu tiempo de pausa ha llegado a: ${totalPauseTime} - Cuida tu tiempo de pausa`;
-      
-        } else if (totalSeconds >= 30 * 60) {
-          totalPauseElementTwo.className = 'total-pause-time-two clr-danger';
-          totalPauseElementTwo.textContent = `Excediste el tiempo de pausa: ${totalPauseTime} - Por favor, detén la pausa`;
-        
-          document.getElementById('footer-switch').style.display = 'none';
-        }
+      if (totalSeconds < 40 * 60) {
+        totalPauseElementTwo.className = 'total-pause-time-two clr-success';
+        totalPauseElementTwo.textContent = `Hoy has estado en pausa: ${totalPauseTime} - Excelente`;
+
+      } else if (totalSeconds >= 40 * 60 && totalSeconds < 70 * 60) {
+        bodyUpdate.classList.add('bg-body-update');
+        totalPauseElementTwo.className = 'total-pause-time-two';
+        totalPauseElementTwo.textContent = `Tu tiempo de pausa ha llegado a: ${totalPauseTime} - Cuida tu tiempo de pausa`;
+
+      } else if (totalSeconds >= 70 * 60) {
+        totalPauseElementTwo.className = 'total-pause-time-two clr-danger';
+        totalPauseElementTwo.textContent = `Excediste el tiempo de pausa: ${totalPauseTime} - Por favor, detén la pausa`;
+
+        document.getElementById('footer-switch').style.display = 'none';
+      }
+
 
         if (!data.success) {
           throw new Error(data.message || 'Error al cargar las pausas');
@@ -525,70 +515,83 @@
         });
         let totalPauses = 0;
         for (const [date, dailyPauses] of Object.entries(pausesByDate)) {
-          const dateHeader = document.createElement('div');
-          dateHeader.className = 'date-header';
-          dateHeader.textContent = date;
-          pauseList.appendChild(dateHeader);
-          
-          totalPauses += dailyPauses.length;
-          
-          dailyPauses.forEach(pause => {
-            //CREA UNA CAJA PARA CADA PAUSA
-            const card = document.createElement('div');
-            card.className = `log-entry ${!pause.end_time ? 'in-progress' : ''}`;
+  // 🔹 Crea un contenedor general para cada grupo (fecha + pausas)
+  const dateContainer = document.createElement('div');
+  dateContainer.className = 'date-container';
 
-            let endText = '';
-            let durationText = '';
+  // 🔹 Agrega el encabezado de la fecha
+  const dateHeader = document.createElement('div');
+  dateHeader.className = 'date-header';
+  dateHeader.textContent = date;
 
-            if (pause.end_time) {
-              endText = new Date(pause.end_time).toLocaleTimeString('es-HN', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false,
-                timeZone: 'America/Tegucigalpa'
-              });
+  dateContainer.appendChild(dateHeader);
 
-              const duration = Math.round((new Date(pause.end_time) - new Date(pause.start_time)) / 1000);
-              const hours = Math.floor(duration / 3600);
-              const minutes = Math.floor((duration % 3600) / 60);
-              const seconds = duration % 60;
+  // 🔹 Contador total de pausas
+  totalPauses += dailyPauses.length;
 
-              durationText = [
-                hours > 0 ? `${hours}h` : '',
-                minutes > 0 ? `${minutes}m` : '',
-                `${seconds}s`
-              ].filter(Boolean).join(' ');
+  // 🔹 Crea un sub-contenedor para las pausas de esa fecha
+  const pausesContainer = document.createElement('div');
+  pausesContainer.className = 'pauses-container';
 
-              if (pause.end_time) {
-                const start = new Date(pause.start_time);
-                const end = new Date(pause.end_time);
-                const duration = Math.round((end - start) / 1000);
-                totalPauseSeconds += duration;
-              }
-            }
+  // 🔹 Recorre cada pausa
+  dailyPauses.forEach(pause => {
+    const card = document.createElement('div');
+    card.className = `log-entry ${!pause.end_time ? 'in-progress' : ''}`;
 
-            const reasonText = reasons[pause.reason] || pause.reason;
-            const startTime = new Date(pause.start_time).toLocaleTimeString('es-HN', {
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-              hour12: false,
-              timeZone: 'America/Tegucigalpa'
-            });
+    let endText = '';
+    let durationText = '';
 
-            card.innerHTML = `
-              <h3>${reasonText}</h3>
-              <div class="info-row">
-                <span class="info-label">Inicio:</span>
-                <span class="info-value">${startTime} - ${pause.end_time ? endText : 'En curso'}</span>
-              </div>
-              ${pause.end_time ? `<div class="info-row"><span class="info-label">Duración:</span><span class="info-value">${durationText}</span></div>` : ''}
-            `;
+    if (pause.end_time) {
+      endText = new Date(pause.end_time).toLocaleTimeString('es-HN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false,
+        timeZone: 'America/Tegucigalpa'
+      });
 
-            pauseList.appendChild(card);
-          });
-        }
+      const duration = Math.round((new Date(pause.end_time) - new Date(pause.start_time)) / 1000);
+      const hours = Math.floor(duration / 3600);
+      const minutes = Math.floor((duration % 3600) / 60);
+      const seconds = duration % 60;
+
+      durationText = [
+        hours > 0 ? `${hours}h` : '',
+        minutes > 0 ? `${minutes}m` : '',
+        `${seconds}s`
+      ].filter(Boolean).join(' ');
+
+      totalPauseSeconds += duration;
+    }
+
+    const reasonText = reasons[pause.reason] || pause.reason;
+    const startTime = new Date(pause.start_time).toLocaleTimeString('es-HN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false,
+      timeZone: 'America/Tegucigalpa'
+    });
+
+    card.innerHTML = `
+      <h3>${reasonText}</h3>
+      <div class="info-row">
+        <span class="info-label">Inicio:</span>
+        <span class="info-value">${startTime} - ${pause.end_time ? endText : 'En curso'}</span>
+      </div>
+      ${pause.end_time ? `<div class="info-row"><span class="info-label">Duración:</span><span class="info-value">${durationText}</span></div>` : ''}
+    `;
+
+    pausesContainer.appendChild(card);
+  });
+
+  // 🔹 Agrega el sub-contenedor de pausas al contenedor de la fecha
+  dateContainer.appendChild(pausesContainer);
+
+  // 🔹 Finalmente, agrega todo al contenedor principal
+  pauseList.appendChild(dateContainer);
+}
+
 
         const totalPauseElement = document.getElementById('total-pause-time');
         const totalPausesElement = document.getElementById('total-pauses');
