@@ -32,7 +32,7 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
 
   /* Texto */
   --text-primary: #f5f5f7;
-  --text-secondary: #aeaeb2;
+  --text-secondary: #99a1af;
   --text-tertiary: #636366;
 
   /* Acentos: blanco suave */
@@ -59,7 +59,7 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
 }
 .bg-body-update{
   background-color: var(--bg-warning-opacity);
-  color: #CDDC39;
+  color: var(--warning);
   border: 1px solid #e0ed3466;
 }
 
@@ -258,10 +258,7 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
 
 /* Content Panel */
 .content-panel {
-  background-color: var(--bg-card2);
-  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 2rem;
 }
 
 .panel-header {
@@ -613,9 +610,6 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
   transition: var(--transition);
 }
 
-.form-container:hover {
-  border-color: var(--border-light);
-}
 
 /* Header del form */
 .form-header h2,
@@ -644,7 +638,7 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
 /* Body del form */
 .form-body {
   padding: 2rem;
-  color: var(--text-secondary);
+  
   font-size: 1.4rem;
   line-height: 1.5;
 }
@@ -1156,6 +1150,7 @@ input[type="date"] {
           font-size: 1.4rem;
     }
    .date-container {
+    background-color: var(--bg-card2);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       margin: 1rem 0;
