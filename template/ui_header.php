@@ -19,6 +19,8 @@
         --text-accent:#ffffff;
 
         --transition: all 0.3s ease;
+
+        --radius: 0.4rem;
     }
     .clr-primary{
         color: var(--text-primary);
@@ -33,7 +35,9 @@
     .header-nav{
         background-color: var(--bg-secondary);
         border-bottom: 1px solid var(--border-primary);
-        
+        position:sticky;
+        top:0;
+        z-index: 10;
     }
     .brand-icon{
         width: 40px;
@@ -80,6 +84,54 @@
         color: var(--text-accent);
         border-bottom: 2px solid var(--border-secondary);
     }
+    /* Main Content */
+    .main-content{
+        padding: 4rem 0;
+    }
+
+    .grid{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .card{
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        border-radius: 0.4rem;
+        padding: 1.5rem;
+        transition: var(--transition);
+        cursor: pointer;
+        stroke: oklab(100% 0 5.96046e-8 / .1);
+        
+    }
+    .card-temp{
+        border: 1px solid var(--border-primary);
+        border-radius: var(--radius);
+    }
+    .card-temp svg{
+        width: 100%;
+        height: 100%;
+    }
+    
+    .card-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    .card-body{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    /* En pantallas pequeñas (móviles/tablets) */
+    @media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr; /* una sola columna */
+    }
+    }
+
 </style>
 <body>
     <div class="header-nav">
