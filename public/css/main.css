@@ -42,8 +42,8 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
   /* Estados (macOS) */
   --info: #0a84ff;
   --warning: #CDDC39;
-  --success: #32d74b;
-  --danger: #ff0000;  
+  --success: #4CAF50;
+  --danger: #e74c3c;  
   --radius: 0.7rem;
   --transition: all 0.3s ease;
   --bg-off:#a2a4a6;
@@ -52,15 +52,29 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
 
   /* Background opacity */
   --bg-warning-opacity: #e0ed341a;
+  --bg-danger-opacity: #e74c3c1a;
+
+  --bg-success-opacity: #32d74b1a;
 
 }
 .bg-off{
   background-color: var(--bg-off);
 }
-.bg-body-update{
+.bg-body-update-warning{
   background-color: var(--bg-warning-opacity);
   color: var(--warning);
   border: 1px solid #e0ed3466;
+}
+.bg-body-update-danger{
+  background-color: var(--bg-danger-opacity);
+  color: var(--danger);
+  border: 1px solid #e74c3c66;
+} 
+
+.bg-body-update-success{
+ background-color: var(--bg-success-opacity);
+    color: var(--success);
+    border: 1px solid #50ed3466;
 }
 
 .clr-danger{
@@ -74,6 +88,12 @@ h1, h2, .header-title, .panel-title, .metric-title, .sidebar-title {
 }
 .clr-info{
   color: var(--info);
+}
+.clr-off{
+  color: var(--clr-off);
+}
+.p-small{
+  font-size: 1.4rem;
 }
 
 /* Header */

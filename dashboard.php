@@ -455,15 +455,17 @@
 
 
       if (totalSeconds < 40 * 60) {
+        bodyUpdate.classList.add('bg-body-update-success');
         totalPauseElementTwo.className = 'total-pause-time-two clr-success';
         totalPauseElementTwo.textContent = `Hoy has estado en pausa: ${totalPauseTime} - Excelente`;
 
       } else if (totalSeconds >= 40 * 60 && totalSeconds < 70 * 60) {
-        bodyUpdate.classList.add('bg-body-update');
+        bodyUpdate.classList.add('bg-body-update-warning');
         totalPauseElementTwo.className = 'total-pause-time-two';
         totalPauseElementTwo.textContent = `Tu tiempo de pausa ha llegado a: ${totalPauseTime} - Cuida tu tiempo de pausa`;
 
       } else if (totalSeconds >= 70 * 60) {
+        bodyUpdate.classList.add('bg-body-update-danger');
         totalPauseElementTwo.className = 'total-pause-time-two clr-danger';
         totalPauseElementTwo.textContent = `Excediste el tiempo de pausa: ${totalPauseTime} - Por favor, detén la pausa`;
 
