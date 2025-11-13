@@ -8,30 +8,7 @@
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 <style>
-    :root{
-        --bg-primary:#101828;
-        --bg-secondary:#172130;
-
-        --border-primary:#ffffff1a;
-        --border-secondary:#615fff;
-
-        --text-primary:#99a1af;
-        --text-accent:#ffffff;
-
-        --transition: all 0.3s ease;
-
-        --radius: 0.4rem;
-    }
-    .clr-primary{
-        color: var(--text-primary);
-    }
-    body{
-        background-color: var(--bg-primary);
-    }
-    .container{
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+ 
     .header-nav{
         background-color: var(--bg-secondary);
         border-bottom: 1px solid var(--border-primary);
@@ -101,7 +78,6 @@
         border-radius: 0.4rem;
         padding: 1.5rem;
         transition: var(--transition);
-        cursor: pointer;
         stroke: oklab(100% 0 5.96046e-8 / .1);
         
     }

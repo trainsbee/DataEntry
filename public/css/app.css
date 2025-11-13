@@ -114,79 +114,30 @@ input[type="number"]::-webkit-outer-spin-button {
     background-color: #9f9f9f;
     border-radius: 24px;
 }
-.toggle-wrapper {
-      display: inline-flex;
-      align-items: center;
-      font-family: system-ui, sans-serif;
-      user-select: none;
-      gap: 8px;
-      font-size: 14px;
-    }
+   :root{
+        --bg-primary:#101828;
+        --bg-secondary:#172130;
 
-    .toggle-input {
-      position: absolute;
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+        --border-primary:#ffffff1a;
+        --border-secondary:#615fff;
 
-    .toggle-switch {
-      position: relative;
-      width: 44px;
-      height: 24px;
-      background: #1c2433;
-      border-radius: 12px;
-      transition: background 0.1s ease;
-      overflow: hidden;
-      border: 1px solid #323a48;
-    }
+        --text-primary:#99a1af;
+        --text-accent:#ffffff;
 
-    .toggle-circle {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      left: 1px;
-      top: 1px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.25s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
-      overflow: hidden;
-    }
+        --transition: all 0.3s ease;
 
-    .toggle-icon {
-      position: relative;
-      width: 14px;
-      height: 14px;
-      color: #64748b;
+        --radius: 0.4rem;
     }
-
-    /* OFF: X (clases svu swk) */
-    .svu.swk {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      opacity: 1;
-      transform: scale(1);
+    .clr-primary{
+        color: var(--text-primary);
     }
-
-    /* ON: Check (clases svu swl) */
-    .svu.swl {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      transform: scale(1);
-      
+    body{
+        background-color: var(--bg-primary);
     }
-
+    .container{
+        max-width: 1200px;
+        margin: 0 auto;
+    }
     /* Estado ON */
     .toggle-input:checked + .toggle-switch {
       background:#615fff;
@@ -235,4 +186,93 @@ select {
   appearance: none;         /* estándar */
   background: url('../../chevron-down.svg') no-repeat right 1rem center;
   background-size: 2rem;
+  width: 32.2rem;
+}
+
+.toggle {
+	cursor: pointer;
+	display: inline-block;
+}
+.toggle-switch {
+	display: inline-block;
+	    background: #1c2433;
+	border-radius: 16px;
+	width: 44px;
+	height: 24px;
+	position: relative;
+	vertical-align: middle;
+	transition: background 0.25s;
+  box-shadow: inset 0 0 0 1px #ffffff1a, 0 4px 6px rgba(0,0,0,0.1);
+  border:0;
+	&:before,
+	&:after {
+		content: "";
+	}
+&:before {
+	display: block;
+	background-color: #EAEEFB;
+	border-radius: 50%;
+	box-shadow: 0 0 0 1px #1018280d, 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	transition: left 0.25s, background-image 0.25s;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 12px;
+	content: "";
+
+	/* SVG OFF (la X) */
+background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2' stroke='%234a5565' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+}
+
+	.toggle-checkbox:checked + & {
+		background: #615fff;
+		&:before {
+			left: 22px;
+background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%23615fff' xmlns='http://www.w3.org/2000/svg'><path d='M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z'/></svg>");
+
+		}
+	}
+}
+.toggle-checkbox {
+	position: absolute;
+	visibility: hidden;
+}
+.toggle-label {
+	margin-left: 5px;
+	position: relative;
+	top: 2px;
+}
+.box-toggle{
+  margin-top: 2rem;
+   display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.toggle-text{
+    
+}
+.toggle-text h3{ 
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-accent);
+    margin-bottom: 0.4rem;
+}
+.toggle-text p{
+    font-size: 1.4rem;
+}
+.select-label{
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-accent);
+}
+.box-select{
+    display:grid;
+    gap: 1rem;
+}
+.control-pause{
+    width: 100%;
 }

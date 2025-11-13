@@ -7,43 +7,38 @@
             <div class="col-span-1">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Horario</h3>
+                        <div class="control-pause">
+                            <div class="box-select select-wrapper">
+                                <label for="select-reason" class="select-label">Reason</label>
+                                <select name="" id="select-reason">
+                                    <option value="">Lunch</option>
+                                    <option value="">Break</option>
+                                    <option value="">Director meeting</option>
+                                    <option value="">Training</option>
+                                    <option value="">Supervisor meeting</option>
+                                    <option value="">Bathroom Outside</option>
+                                    <option value="">Bathroom Office</option>
+                                    <option value="">Other</option>
+                                </select>
+                                
+                            </div>
+
+                            <div class="box-toggle toggle-wrapper">
+                                <div class="toggle-text">
+                                    <h3>Annual billing</h3>
+                                    <p>Hoy has estado en pausa: 0h 12m 52s - Excelente</p>
+                                </div>
+                                <label class="toggle">
+                                    <input class="toggle-checkbox" type="checkbox">
+                                    <div class="toggle-switch"></div>
+                                </label>
+                                
+                            </div>
+                        </div>
                         
                     </div>
                     <div class="card-body">
-                        <div class="control-pause">
-                            <div class="select-wrapper">
-                                <select name="" id="">
-                                    <option value="">Lunes</option>
-                                    <option value="">Martes</option>
-                                    <option value="">Miercoles</option>
-                                    <option value="">Jueves</option>
-                                    <option value="">Viernes</option>
-                                    <option value="">Sabado</option>
-                                    <option value="">Domingo</option>
-                                </select>
-                            </div>
-                            <br>
-                            <label class="toggle-wrapper">
-                                <input type="checkbox" class="toggle-input" />
-                                <div class="toggle-switch">
-                                <div class="toggle-circle">
-                                    <div class="toggle-icon">
-                        <!-- OFF: X (clases svu swk, viewBox 12x12) -->
-                            <svg viewBox="0 0 12 12" fill="none" class="svu swk">
-                                <path d="M4 8l2-2m0 0l2-2M6 6L4 4m2 2l2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </svg>
-
-                        <!-- ON: Check (clases feather feather-check, viewBox 24x24) -->
-                        <svg viewBox="0 0 12 12" fill="currentColor" class="svu swl">
-                        <path d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z"></path>
-                        </svg>
-                        </div>
-                    </div>
-                    </div>
-                    <span>Activar</span>
-                </label>
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -78,3 +73,4 @@ toggleInput.addEventListener('change', () => {
 });
 
   </script>
+  
