@@ -114,3 +114,125 @@ input[type="number"]::-webkit-outer-spin-button {
     background-color: #9f9f9f;
     border-radius: 24px;
 }
+.toggle-wrapper {
+      display: inline-flex;
+      align-items: center;
+      font-family: system-ui, sans-serif;
+      user-select: none;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .toggle-input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      background: #1c2433;
+      border-radius: 12px;
+      transition: background 0.1s ease;
+      overflow: hidden;
+      border: 1px solid #323a48;
+    }
+
+    .toggle-circle {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      left: 1px;
+      top: 1px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+      overflow: hidden;
+    }
+
+    .toggle-icon {
+      position: relative;
+      width: 14px;
+      height: 14px;
+      color: #64748b;
+    }
+
+    /* OFF: X (clases svu swk) */
+    .svu.swk {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ON: Check (clases svu swl) */
+    .svu.swl {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transform: scale(1);
+      
+    }
+
+    /* Estado ON */
+    .toggle-input:checked + .toggle-switch {
+      background:#615fff;
+      border: 1px solid #706fff;
+    }
+
+    .toggle-input:checked + .toggle-switch .toggle-circle {
+      transform: translateX(20px);
+    }
+
+    .toggle-input:checked + .toggle-switch .toggle-icon {
+      color: white;
+    }
+
+    .toggle-input:checked + .toggle-switch .svu.swk {
+      opacity: 0;
+      transform: scale(1);
+    }
+
+    .toggle-input:checked + .toggle-switch .svu.swl {
+      color: #615fff;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .select-wrapper select {
+        background-color: #ffffff0d;
+        border: 1px solid #ffffff1a;
+        color: #ffffff;
+        border-radius: 0.4rem;
+        height: 3.6rem;
+        padding: 0 1.6rem;
+        padding-right:4rem;
+        transition: var(--transition);
+    }
+  .select-wrapper select option {
+    background-color:#1e2939; /* fondo de cada opción */
+    color: #ffffff; /* color del texto de cada opción */
+}
+  .select-wrapper select:focus {
+    box-shadow: 0 0 0 2px #615fff;
+}
+select {
+  -webkit-appearance: none; /* Chrome, Safari */
+  -moz-appearance: none;    /* Firefox */
+  appearance: none;         /* estándar */
+  background: url('../../chevron-down.svg') no-repeat right 1rem center;
+  background-size: 2rem;
+}

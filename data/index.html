@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry - Paragon Financial Corp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #171717;
+            --text: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --accent: #d4af37;
+            --leader: #10b981;
+            --border: #2a2a2a;
+            --radius: 10px;
+            --shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .leader-title {
+            font-size: 1rem;
+            color: var(--leader);
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .org {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .level {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .level::before {
+            content: '';
+            position: absolute;
+            top: -1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75%;
+            max-width: 800px;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .node {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.1rem 1.3rem;
+            min-width: 250px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .node:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .node-title {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+
+        .node-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .node-report {
+            font-size: 0.7rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        .root {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            color: white;
+            font-weight: 700;
+            margin: 0 auto 2.5rem;
+            max-width: 340px;
+        }
+
+        .leader-node {
+            border: 2px solid var(--leader);
+            background: linear-gradient(135deg, #065f46, #047857);
+            color: white;
+        }
+
+        .report-node {
+            border-top: 4px solid var(--accent);
+        }
+
+        /* Leader Module */
+        .leader-module {
+            background: linear-gradient(135deg, #1a1a1a, #111);
+            border: 1px solid var(--leader);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 3rem auto;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .leader-module h2 {
+            color: var(--leader);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .leader-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .action {
+            background: rgba(16, 185, 129, 0.15);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Employee Modal (Lateral) */
+        .employee-overlay {
+            position: fixed;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.4s ease;
+        }
+
+        .employee-overlay.active { opacity: 1; visibility: visible; }
+
+        .employee-drawer {
+            position: fixed;
+            top: 0; right: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            background: var(--card);
+            border-left: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1001;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .employee-drawer.active { transform: translateX(0); }
+
+        .employee-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .employee-photo {
+            width: 64px;
+            height: 64px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: #000;
+        }
+
+        .employee-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .employee-user {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .employee-close {
+            position: absolute;
+            top: 1.5rem; right: 1.5rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .employee-close:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+
+        .employee-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill {
+            background: rgba(212, 175, 55, 0.15);
+            color: var(--accent);
+            font-size: 0.8rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 1rem;
+            font-weight: 500;
+        }
+
+        .forte {
+            background: var(--leader);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* Modal Proceso */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(6px);
+            z-index: 900;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            z-index: 901;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+        }
+
+        .modal.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .modal-body { padding: 1.5rem; }
+
+        .info { margin-bottom: 1rem; }
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        .info-value { font-size: 0.9rem; color: var(--text); }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .level { gap: 1rem; }
+            .node { min-width: 100%; max-width: 300px; }
+            h1 { font-size: 2rem; }
+            .employee-drawer { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="badge">Paragon Financial Corp</div>
+        <h1>Data Entry</h1>
+        <p class="leader-title">Líder General: DAVID MALDONADO</p>
+    </header>
+
+    <div class="org">
+
+        <!-- Raíz -->
+        <div class="level">
+            <div class="node root" onclick="openProcess('processing')">
+                <div class="node-title">Processing</div>
+                <div class="node-desc">Validación de políticas y corrección de errores</div>
+            </div>
+        </div>
+
+        <!-- Nivel 1 -->
+        <div class="level">
+            <div class="node" onclick="openProcess('sales')">
+                <div class="node-title">Sales Manager</div>
+                <div class="node-desc">Captura de contratos</div>
+                <div class="node-report">→ Base de ventas → Reportes</div>
+            </div>
+        </div>
+
+        <!-- Nivel 2 -->
+        <div class="level">
+            <div class="node" onclick="openProcess('enrollment')">
+                <div class="node-title">Enrollment</div>
+                <div class="node-desc">Verificación final antes de DebtManager</div>
+                <div class="node-report">→ Cliente inscrito → Review</div>
+            </div>
+            <div class="node" onclick="openProcess('average')">
+                <div class="node-title">Average</div>
+                <div class="node-desc">Promedios por idioma</div>
+                <div class="node-report">→ Dashboard → Power BI</div>
+            </div>
+        </div>
+
+        <!-- Nivel 3 -->
+        <div class="level">
+            <div class="node" onclick="openProcess('review')">
+                <div class="node-title">Enrollment Review</div>
+                <div class="node-desc">Revisión final en 3 sistemas</div>
+                <div class="node-report">→ ACH Revoke → Acreedores</div>
+            </div>
+            <div class="node" onclick="openProcess('cpa')">
+                <div class="node-title">CPA</div>
+                <div class="node-desc">Costo por adquisición</div>
+            </div>
+            <div class="node" onclick="openProcess('ranking')">
+                <div class="node-title">Ranking</div>
+                <div class="node-desc">Agentes por ventas</div>
+            </div>
+        </div>
+
+        <!-- Nivel 4 -->
+        <div class="level">
+            <div class="node" onclick="openProcess('qc-comp')">
+                <div class="node-title">QC Compliance</div>
+                <div class="node-desc">Auditoría de verificación</div>
+            </div>
+            <div class="node" onclick="openProcess('qc-sales')">
+                <div class="node-title">QC Sales</div>
+                <div class="node-desc">Auditoría de ventas</div>
+            </div>
+            <div class="node" onclick="openProcess('campaigns')">
+                <div class="node-title">Campañas</div>
+                <div class="node-desc">Separación por campaña</div>
+            </div>
+        </div>
+
+        <!-- MÓDULO REPORTES -->
+        <div class="level">
+            <div class="node report-node" onclick="openProcess('reportes')">
+                <div class="node-title">MÓDULO REPORTES</div>
+                <div class="node-desc">Validación + Envío programado</div>
+                <div class="node-report">→ Cada hora → Todas las plataformas</div>
+            </div>
+        </div>
+
+        <!-- MÓDULO LÍDER -->
+        <div class="leader-module" onclick="openLeader()">
+            <h2>ROL DEL LÍDER: DAVID MALDONADO</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 1rem 0;">
+                Supervisa, automatiza, corrige e implementa cambios en todos los procesos (excepto Processing).
+            </p>
+            <div class="leader-actions">
+                <div class="action">Automatización de tareas</div>
+                <div class="action">Corrección de errores</div>
+                <div class="action">Implementación de mejoras</div>
+                <div class="action">Supervisión de reportes</div>
+                <div class="action">Capacitación del equipo</div>
+                <div class="action">Validación final de datos</div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p>Departamento de Data Entry | Honduras | © 2025 Paragon Financial Corp</p>
+    </footer>
+
+    <!-- Modal Proceso -->
+    <div class="modal-overlay" id="processOverlay" onclick="closeProcess()"></div>
+    <div class="modal" id="processModal">
+        <div class="modal-header">
+            <div class="modal-title" id="processTitle">Proceso</div>
+            <button class="modal-close" onclick="closeProcess()">X</button>
+        </div>
+        <div class="modal-body">
+            <div class="info">
+                <div class="info-label">Descripción Detallada</div>
+                <div class="info-value" id="processDesc"></div>
+            </div>
+            <div class="info">
+                <div class="info-label">Responsables</div>
+                <div class="info-value" id="processPeople"></div>
+            </div>
+            <div class="info">
+                <div class="info-label">Reporte</div>
+                <div class="info-value" id="processReport"></div>
+            </div>
+            <div class="info">
+                <div class="info-label">Frecuencia</div>
+                <div class="info-value" id="processFreq"></div>
+            </div>
+            <div class="info">
+                <div class="info-label">Plataforma</div>
+                <div class="info-value" id="processPlatform"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employee Drawer -->
+    <div class="employee-overlay" id="employeeOverlay" onclick="closeEmployee()"></div>
+    <div class="employee-drawer" id="employeeDrawer">
+        <button class="employee-close" onclick="closeEmployee()">X</button>
+        <div class="employee-header">
+            <div class="employee-photo" id="employeeInitials"></div>
+            <div>
+                <div class="employee-name" id="employeeName"></div>
+                <div class="employee-user" id="employeeUser"></div>
+            </div>
+        </div>
+        <div class="employee-section">
+            <div class="section-title">Departamento</div>
+            <div class="section-content" id="employeeDept">Data Entry</div>
+        </div>
+        <div class="employee-section">
+            <div class="section-title">Sobre mí</div>
+            <div class="section-content" id="employeeAbout"></div>
+        </div>
+        <div class="employee-section">
+            <div class="section-title">Habilidades</div>
+            <div class="skills" id="employeeSkills"></div>
+        </div>
+        <div class="employee-section">
+            <div class="section-title">Fortalezas</div>
+            <div class="forte" id="employeeForte"></div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de Procesos
+        const processes = {
+            processing: {
+                title: "Processing",
+                desc: "Verificación de políticas, corrección de errores, validación de documentos y clientes.",
+                people: "Astrid Mariela Colindres Zelaya<br>Ericka Daniela Martínez",
+                report: "Clientes aprobados",
+                freq: "Continuo",
+                platform: "CRM Interno"
+            },
+            sales: {
+                title: "Sales Manager",
+                desc: "Captura de datos de clientes que firman contrato. Verificación en grupos español e inglés.",
+                people: "Ángel David Alvarenga Martínez<br>Lourdes Raquel Aguirre<br><strong>David Maldonado (Líder)</strong>",
+                report: "Base de ventas actualizada",
+                freq: "Diario",
+                platform: "Google Sheets"
+            },
+            enrollment: {
+                title: "Enrollment",
+                desc: "<strong>Verificar que todos los datos del cliente estén correctos tanto en DEBTTRAKKER como en el CONTRATO</strong> para poder enviarlo al DEBTMANAGER. Se revisa nombre, SSN, dirección, acreedores, montos, firmas digitales, etc.",
+                people: "David Maldonado (Líder)<br>Ángel David Alvarenga Martínez",
+                report: "Cliente listo para DebtManager",
+                freq: "Diario",
+                platform: "CRM → DebtManager"
+            },
+            review: {
+                title: "Enrollment Review",
+                desc: "<strong>Revisar los clientes en el Manager</strong> y verificar que todos los datos estén correctos en: <br>• <strong>DEBTTRAKKER</strong><br>• <strong>CONTRATO</strong><br>• <strong>DEBTMANAGER</strong><br>Luego, <strong>enviar los ACH REVOKE de cada acreedor</strong> para detener pagos automáticos.",
+                people: "David Maldonado (Líder)<br>Equipo de revisión",
+                report: "ACH Revoke enviados",
+                freq: "Diario (mañana y tarde)",
+                platform: "Email a acreedores + CRM"
+            },
+            average: {
+                title: "Average",
+                desc: "Cálculo de promedios de ventas por equipo (ES/EN).",
+                people: "David Gonzales Maldonado<br>David Maldonado (Líder)",
+                report: "Dashboard de rendimiento",
+                freq: "Cada hora",
+                platform: "Power BI"
+            },
+            cpa: {
+                title: "CPA por Idioma & Oficina",
+                desc: "Costo por adquisición total y segmentado.",
+                people: "Ángel David Alvarenga Martínez<br>David Gonzales Maldonado<br>David Maldonado (Líder)",
+                report: "Informe CPA",
+                freq: "Diario",
+                platform: "Google Data Studio"
+            },
+            ranking: {
+                title: "Ranking de Agentes",
+                desc: "Clasificación por ventas: día, 2 días, mes.",
+                people: "David Maldonado",
+                report: "Leaderboard",
+                freq: "Cada 2 horas",
+                platform: "Microsoft Teams"
+            },
+            'qc-comp': {
+                title: "QC Compliance",
+                desc: "Auditoría de llamadas de verificación.",
+                people: "Daniel Vladimir Hernández Salgado<br>David Maldonado (Líder)",
+                report: "Reporte de calidad",
+                freq: "Diario",
+                platform: "Slack"
+            },
+            'qc-sales': {
+                title: "QC Sales",
+                desc: "Auditoría de llamadas de venta.",
+                people: "Daniel Vladimir Hernández Salgado<br>David Maldonado (Líder)",
+                report: "Feedback",
+                freq: "Diario",
+                platform: "Email"
+            },
+            campaigns: {
+                title: "Actualización Campañas",
+                desc: "Separación de clientes por campaña.",
+                people: "Evelyn Daniela Oseguera Aguilar<br>David Maldonado (Líder)",
+                report: "Archivos por campaña",
+                freq: "Diario",
+                platform: "Google Drive"
+            },
+            reportes: {
+                title: "MÓDULO REPORTES",
+                desc: "Validación final de todos los reportes antes de envío. Se revisa consistencia, errores y formato.",
+                people: "David Gonzales Maldonado<br>Ángel David Alvarenga Martínez<br><strong>David Maldonado (Líder)</strong>",
+                report: "Reportes consolidados",
+                freq: "Cada hora o programado",
+                platform: "Todas las plataformas"
+            }
+        };
+
+        // Datos de Empleados
+        const employees = {
+            'david-maldonado': {
+                name: "David Maldonado",
+                user: "dmaldonado",
+                dept: "Data Entry - Líder General",
+                about: "Líder del departamento con +5 años en gestión de datos financieros. Experto en automatización, optimización de procesos y calidad de datos.",
+                skills: ["Automatización", "Excel Avanzado", "CRM", "Power BI", "Liderazgo", "SQL"],
+                forte: "Automatización y Mejora Continua"
+            },
+            'astrid-colindres': {
+                name: "Astrid Mariela Colindres Zelaya",
+                user: "acolindres",
+                dept: "Processing",
+                about: "Especialista en validación de políticas y corrección de errores. Alta precisión en datos sensibles.",
+                skills: ["Atención al detalle", "CRM", "Validación", "Documentación"],
+                forte: "Precisión en validación"
+            },
+            'ericka-martinez': {
+                name: "Ericka Daniela Martínez",
+                user: "emartinez",
+                dept: "Processing",
+                about: "Experta en revisión de documentos y cumplimiento de políticas. Enfocada en calidad.",
+                skills: ["Compliance", "Documentos", "Revisión", "CRM"],
+                forte: "Cumplimiento normativo"
+            },
+            'angel-alvarenga': {
+                name: "Ángel David Alvarenga Martínez",
+                user: "aalvarenga",
+                dept: "Sales Manager / Reportes",
+                about: "Experto en captura de datos y generación de reportes. Domina múltiples herramientas.",
+                skills: ["Google Sheets", "CRM", "Reportes", "Automatización"],
+                forte: "Reportes y Automatización"
+            },
+            'david-gonzales': {
+                name: "David Gonzales Maldonado",
+                user: "dgonzales",
+                dept: "Average / CPA / Reportes",
+                about: "Analista de datos con enfoque en métricas financieras y rendimiento.",
+                skills: ["Power BI", "Data Studio", "Análisis", "CPA"],
+                forte: "Análisis Financiero"
+            },
+            'daniel-hernandez': {
+                name: "Daniel Vladimir Hernández Salgado",
+                user: "dhernandez",
+                dept: "QC Compliance & Sales",
+                about: "Auditor de calidad con experiencia en evaluación de llamadas y cumplimiento.",
+                skills: ["Auditoría", "Calidad", "Llamadas", "Feedback"],
+                forte: "Control de Calidad"
+            },
+            'evelyn-oseguera': {
+                name: "Evelyn Daniela Oseguera Aguilar",
+                user: "eoseguera",
+                dept: "Actualización Campañas",
+                about: "Especialista en segmentación y gestión de campañas de clientes.",
+                skills: ["Segmentación", "CRM", "Exportación", "Drive"],
+                forte: "Gestión de Campañas"
+            }
+        };
+
+        function openProcess(id) {
+            const p = processes[id];
+            document.getElementById('processTitle').innerHTML = p.title;
+            document.getElementById('processDesc').innerHTML = p.desc;
+            document.getElementById('processPeople').innerHTML = p.people;
+            document.getElementById('processReport').textContent = p.report;
+            document.getElementById('processFreq').textContent = p.freq;
+            document.getElementById('processPlatform').textContent = p.platform;
+            document.getElementById('processOverlay').classList.add('active');
+            document.getElementById('processModal').classList.add('active');
+        }
+
+        function closeProcess() {
+            document.getElementById('processOverlay').classList.remove('active');
+            document.getElementById('processModal').classList.remove('active');
+        }
+
+        function openLeader() {
+            openEmployee('david-maldonado');
+        }
+
+        function openEmployee(id) {
+            const e = employees[id];
+            document.getElementById('employeeName').textContent = e.name;
+            document.getElementById('employeeUser').textContent = `@${e.user}`;
+            document.getElementById('employeeDept').textContent = e.dept;
+            document.getElementById('employeeAbout').textContent = e.about;
+            document.getElementById('employeeForte').textContent = e.forte;
+
+            const initials = e.name.split(' ').map(n => n[0]).join('').toUpperCase();
+            document.getElementById('employeeInitials').textContent = initials;
+
+            const skillsDiv = document.getElementById('employeeSkills');
+            skillsDiv.innerHTML = '';
+            e.skills.forEach(s => {
+                const span = document.createElement('span');
+                span.className = 'skill';
+                span.textContent = s;
+                skillsDiv.appendChild(span);
+            });
+
+            document.getElementById('employeeOverlay').classList.add('active');
+            document.getElementById('employeeDrawer').classList.add('active');
+        }
+
+        function closeEmployee() {
+            document.getElementById('employeeOverlay').classList.remove('active');
+            document.getElementById('employeeDrawer').classList.remove('active');
+        }
+
+        // Asignar clics a nombres en procesos
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'STRONG' && e.target.textContent.includes('David Maldonado')) {
+                openEmployee('david-maldonado');
+            } else if (e.target.textContent.includes('Astrid')) {
+                openEmployee('astrid-colindres');
+            } else if (e.target.textContent.includes('Ericka')) {
+                openEmployee('ericka-martinez');
+            } else if (e.target.textContent.includes('Ángel')) {
+                openEmployee('angel-alvarenga');
+            } else if (e.target.textContent.includes('David Gonzales')) {
+                openEmployee('david-gonzales');
+            } else if (e.target.textContent.includes('Daniel Vladimir')) {
+                openEmployee('daniel-hernandez');
+            } else if (e.target.textContent.includes('Evelyn')) {
+                openEmployee('evelyn-oseguera');
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                closeProcess();
+                closeEmployee();
+            }
+        });
+    </script>
+
+</body>
+</html>
