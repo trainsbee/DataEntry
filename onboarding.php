@@ -32,13 +32,101 @@
                                     <input class="toggle-checkbox" type="checkbox">
                                     <div class="toggle-switch"></div>
                                 </label>
-                                
+                            </div>
+                            <div class="box-date-range">
+                                <div class="date-range">
+                                    <div class="date-range-item input-wrapper">
+                                        <input type="date">
+                                    </div>
+                                    <div class="date-range-item input-wrapper">
+                                        <input type="date">
+                                    </div>
+                                    <div class="date-range-item input-wrapper">
+                                        <button class="btn btn-default" type="button"><span icon-data="filter"><i data-feather="filter"></i></span></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
                     </div>
                     <div class="card-body">
-                        
+                        <div class="box-stats">
+                            <div class="stats-item">
+                                <h3>Horas</h3>
+                                <p>0h 12m 52s</p>
+                            </div>
+                            <div class="stats-item">
+                                <h3>Minutos</h3>
+                                <p>12m</p>
+                            </div>
+                            <div class="stats-item">
+                                <h3>Segundos</h3>
+                                <p>52s</p>
+                            </div>
+                        </div>
+                        <div class="box-stacked">
+                            <div class="stacked-item row-active-warning">
+                                <div class="info-row">
+                                    <div class="info-label">
+                                        <h3>Bathroom</h3>
+                                    </div>
+                                    <div class="info-value">
+                                        <p>Time</p>
+                                    </div>
+
+                                </div>
+                                <div class="info-row time">
+                                    <div class="info-label">
+                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
+                                    </div>
+                                    <div class="info-value">
+                                        <p>20:41:54 - In progress</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stacked-item">
+                                <div class="info-row">
+                                    <div class="info-label">
+                                        <h3>Bathroom</h3>
+                                    </div>
+                                    <div class="info-value">
+                                        <p>Time</p>
+                                        <p>Duration</p>
+                                    </div>
+
+                                </div>
+                                <div class="info-row time">
+                                    <div class="info-label">
+                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
+                                    </div>
+                                    <div class="info-value">
+                                        <p>20:41:54 - 20:46:41</p>
+                                        <p>4m 47s</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="stacked-item">
+                                <div class="info-row">
+                                    <div class="info-label">
+                                        <h3>Bathroom</h3>
+                                    </div>
+                                    <div class="info-value">
+                                        <p>Time</p>
+                                        <p>Duration</p>
+                                    </div>
+
+                                </div>
+                                <div class="info-row time">
+                                    <div class="info-label">
+                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
+                                    </div>
+                                    <div class="info-value">
+                                        <p>20:41:54 - 20:46:41</p>
+                                        <p>4m 47s</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -61,6 +149,7 @@
     </div>
 </main>
 
+<?php include 'template/ui_footer.php';?>
 <script>
   const toggleInput = document.querySelector('.toggle-input');
 
