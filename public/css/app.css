@@ -121,6 +121,9 @@ input[type="number"]::-webkit-outer-spin-button {
         --border-secondary:#615fff;
         --bg-accent-primary:#615fff;
         --text-primary:#99a1af;
+        --text-secundary:#7c86ff;
+        --bg-purple-secundary:#615fff33;
+        --border-purple-secundary:#615fff;
         --text-accent:#ffffff;
         --bg-default:#99a1af;
         --transition: all 0.3s ease;
@@ -196,7 +199,7 @@ input[type="number"]::-webkit-outer-spin-button {
     color: var(--text-primary);
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(50%) sepia(100%) saturate(500%) hue-rotate(200deg);
+    filter: invert(63%) sepia(7%) saturate(300%) hue-rotate(185deg) brightness(92%) contrast(95%);
     cursor: pointer;
 }
 
@@ -379,23 +382,28 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
     align-items: center;
 }
 .btn{
-    
-    color: var(--text-primary);
     border-radius: 0.4rem;
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     transition: var(--transition);
+    cursor: pointer;
+    height: 3.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 .btn-default{
-    background-color: var(--bg-default);
-    color: var(--text-accent);
-    border: 1px solid var(--border-primary);
+    background-color: var(--bg-purple-secundary);
+    color: var(--text-secundary);
+    border: 1px solid var(--border-purple-secundary);
 }
 .btn-primary{
     background-color: var(--bg-accent-primary);
     color: var(--text-accent);
 }
-.btn-primary:hover{
-    
+.btn-default:hover{
+    background-color: var(--bg-accent-primary);
+    color: var(--text-accent);
 }
 .btn-primary:active{
     
@@ -403,3 +411,26 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
 .date-range-item{
     margin: 0 0.5rem;
 }
+.loader.active {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 2px solid #ffffff;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
+
+    .icon-filter.hidden {
+        display: none;
+    }

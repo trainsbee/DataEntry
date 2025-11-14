@@ -42,12 +42,41 @@
                                         <input type="date">
                                     </div>
                                     <div class="date-range-item input-wrapper">
-                                        <button class="btn btn-default" type="button"><span icon-data="filter"><i data-feather="filter"></i></span></button>
+                                        <button class="btn btn-default" type="button">
+                                            <span class="icon-filter" icon-data="filter"><i data-feather="filter"></i></span>
+                                            <span class="loader"></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                 <script>
+    // Inicializar Feather Icons (¡importante!)
+    feather.replace();
+
+    const btnFilter = document.querySelector('.btn-default');
+    const iconFilter = document.querySelector('.icon-filter');
+    const iconLoader = document.querySelector('.loader');
+
+    btnFilter.addEventListener('click', () => {
+        // Ocultar icono filter
+        iconFilter.classList.add('hidden');
+        // Mostrar loader
+        iconLoader.classList.add('active');
+
+        // Simular carga de 2 segundos
+        setTimeout(() => {
+            // Ocultar loader
+            iconLoader.classList.remove('active');
+            // Mostrar icono filter de nuevo
+            iconFilter.classList.remove('hidden');
+            
+            // Reemplazar icono (por si se pierde el SVG)
+            feather.replace();
+        }, 2000);
+    });
+</script>
                     <div class="card-body">
                         <div class="box-stats">
                             <div class="stats-item">
