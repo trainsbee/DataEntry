@@ -50,7 +50,7 @@ span[icon-data]{
   margin-top: -1px;
 }
 span[icon-data] svg{
-  width: 1.6rem;
+  width: 1.8rem;
 
 }
 .dgm-icon{
@@ -299,12 +299,14 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
 }
 .control-pause{
     width: 100%;
+    padding-bottom: 2rem;
 }
 .box-stats{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
     justify-content: space-between;
+    margin-bottom: 2rem;
 }
 .stats-item{
     display: flex;
@@ -408,12 +410,16 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
 .btn-primary:active{
     
 }
-.date-range-item{
-    margin: 0 0.5rem;
+.date-range{
+   gap: 1rem;
+   margin-bottom: 1rem;
 }
-.loader.active {
-    width: 1.6rem;
-    height: 1.6rem;
+.box-date-range{
+    padding-top: 2rem;
+}
+.loader_circle.active {
+    width: 1.8rem;
+    height: 1.8rem;
     border: 2px solid #ffffff;
     border-bottom-color: transparent;
     border-radius: 50%;
@@ -434,3 +440,35 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
     .icon-filter.hidden {
         display: none;
     }
+    .card.card-onboarding{
+        background-color: transparent;
+        border: none;
+        padding: 0;
+    }
+    .card-onboarding .card-header{
+      
+    }
+    .card-onboarding .card-body{
+      padding: 1.5rem;
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-primary);
+        border-radius: 0.4rem;
+    }
+    .separador{
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       gap: 1rem;
+    }
+    .line-left{
+        width: 50%;
+        height: 1px;
+        background-color: var(--border-primary);
+    }
+    
+    .line-right{
+        width: 50%;
+        height: 1px;
+        background-color: var(--border-primary);
+    }
+    
