@@ -307,6 +307,8 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
     gap: 1rem;
     justify-content: space-between;
     margin-bottom: 2rem;
+
+   
 }
 .stats-item{
     display: flex;
@@ -338,6 +340,11 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
+
+     padding: 1.5rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 0.4rem;
 }
 .stacked-item{
   display: flex;
@@ -449,10 +456,7 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
       
     }
     .card-onboarding .card-body{
-      padding: 1.5rem;
-        background-color: var(--bg-secondary);
-        border: 1px solid var(--border-primary);
-        border-radius: 0.4rem;
+      
     }
     .separador{
        display: flex;
@@ -471,4 +475,44 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
         height: 1px;
         background-color: var(--border-primary);
     }
-    
+    .date-header{
+        padding: 1rem 0rem;
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        font-weight: 500;
+    }
+
+    .loader{
+	display: flex;
+	flex-direction: row;
+  justify-content: center;
+}
+
+.loader span{
+	background: #ecf0f6;
+	border: 1pz solid rgba(144,163,204,0.24);
+	height: 20px;
+	width: 8px;
+	margin-left: 4px;
+	transform-origin: center center;
+	animation: .8s ease spinner1 999;
+}
+
+.loader .spinner2{
+	animation-delay: .1s;
+}
+
+.loader .spinner3{
+	animation-delay: .2s;
+}
+
+@keyframes spinner1{
+	0%,50%{
+		transform: scaleX(1) scaleY(1);
+	}
+	25%{
+		transform: scaleX(1.2) scaleY(1.6);
+		background: #90a3cc;
+		border-color: #335890;
+	}
+}

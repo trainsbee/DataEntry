@@ -66,18 +66,24 @@
                         <div class="box-stats">
                             <div class="stats-item">
                                 <h3>Horas</h3>
-                                <p>0h 12m 52s</p>
+                                <p id="total-pauses"></p>
                             </div>
                             <div class="stats-item">
                                 <h3>Minutos</h3>
-                                <p>12m</p>
+                                <p id="total-pause-time"></p>
                             </div>
                             <div class="stats-item">
                                 <h3>Segundos</h3>
-                                <p>52s</p>
+                                <p id="total-remaining-time"></p>
                             </div>
                         </div>
+                        <div class="loader">
+                      <span class="spinner1"></span>
+                      <span class="spinner2"></span>
+                      <span class="spinner3"></span>
+                    </div>
                         <div id="pause-list">
+                            
                             </div>
                         <div class="box-stacked">
                                 
@@ -149,7 +155,7 @@
                         </div>
                         <!-- Fin de la tabla -->
                     </div>
-                     <main class="main-content">
+<main class="main-content">
         <div class="content-container">
             <!-- Content Panel -->
             <div class="content-panel">
@@ -203,17 +209,17 @@
                     <div class="metrics-container">
                         <div class="metric-box">
                             <h3 class="metric-title">Pausas</h3>
-                            <p class="metric-value" id="total-pauses"></p>
+                            <p class="metric-value"></p>
                             <p class="metric-desc">Total de pausas</p>
                         </div>
                         <div class="metric-box">
                             <h3 class="metric-title">Tiempo en pausa</h3>
-                            <p class="metric-value" id="total-pause-time"></p>
+                            <p class="metric-value" ></p>
                             <p class="metric-desc">Total de tiempo en pausa</p>
                         </div>
                         <div class="metric-box">
                             <h3 class="metric-title">Tiempo restante</h3>
-                            <p class="metric-value" id="total-remaining-time"></p>
+                            <p class="metric-value"></p>
                             <p class="metric-desc">Tiempo restante</p>
                         </div>
                     </div>
@@ -250,11 +256,7 @@
 </div>
 
                 <div id="logs" class="tab-content">
-                    <div class="loader">
-                      <span class="spinner1"></span>
-                      <span class="spinner2"></span>
-                      <span class="spinner3"></span>
-                    </div>
+                    
                     <div class="logs-list" id="pause-list2">
                        
                     </div>
@@ -346,15 +348,16 @@ toggleInput.addEventListener('change', () => {
   
 
     const API_URL = "<?php echo API_URL; ?>";
+
     const reasons = {
-      break: 'Break 15 minutos',
-      lunch: 'Almuerzo',
-      bathroom_outside: 'Baño afuera',
-      bathroom_office: 'Baño oficina',
-      meeting_manager: 'Reunión con gerente',
-      meeting_rrhh: 'Reunión con RRHH',
-      meeting_country_manager: 'Reunión con gerente de país',
-    };
+        BREAK: 'Break 15 minutos',
+        LUNCH: 'Almuerzo',
+        BATHROOM_OUTSIDE: 'Baño afuera',
+        BATHROOM_OFFICE: 'Baño oficina',
+        MEETING_MANAGER: 'Reunión con gerente',
+        MEETING_RRHH: 'Reunión con RRHH',
+        MEETING_COUNTRY_MANAGER: 'Reunión con gerente de país',
+    }
 
     let currentPause = null;
     let currentUser = null;
@@ -577,7 +580,7 @@ toggleInput.addEventListener('change', () => {
         const data = await response.json();
 
         const importantPauses = data.data.filter(pause =>
-          pause.reason === 'bathroom_outside' || pause.reason === 'break' || pause.reason === 'bathroom_office'
+          pause.reason === 'BATHROOM_OUTSIDE' || pause.reason === 'BREAK' || pause.reason === 'BATHROOM_OFFICE'
         );
 
         const hondurasDate = new Date().toLocaleDateString("es-HN", {
@@ -707,7 +710,7 @@ toggleInput.addEventListener('change', () => {
       const dateHeader = document.createElement('div');
       dateHeader.className = 'date-header';
       dateHeader.textContent = date;
-
+            
       dateContainer.appendChild(dateHeader);
 
       // 🔹 Contador total de pausas
@@ -720,7 +723,7 @@ toggleInput.addEventListener('change', () => {
       // 🔹 Recorre cada pausa
       dailyPauses.forEach(pause => {
         const card = document.createElement('div');
-        card.className = `log-entry ${!pause.end_time ? 'in-progress' : ''}`;
+        card.className = `stacked-item ${!pause.end_time ? 'row-active-warning' : ''}`;
 
         let endText = '';
         let durationText = '';
@@ -758,16 +761,32 @@ toggleInput.addEventListener('change', () => {
         });
 
         card.innerHTML = `
-          <h3>${reasonText}</h3>
-          <div class="info-row">
-            <span class="info-label">Inicio:</span>
-            <span class="info-value">${startTime} - ${pause.end_time ? endText : 'En curso'}</span>
-          </div>
-          ${pause.end_time ? `<div class="info-row"><span class="info-label">Duración:</span><span class="info-value">${durationText}</span></div>` : ''}
-        `;
+                                <div class="info-row">
+                                    <div class="info-label">
+                                        <h3>${reasonText}</h3>
+                                    </div>
+                                    <div class="info-value">
+                                        <p>Time</p>
+                                        <p>${pause.end_time ? 'Duration' : ''}</p>
+                                    </div>
+
+                                </div>
+                                <div class="info-row time">
+                                    <div class="info-label">
+                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
+                                    </div>
+                                    <div class="info-value">
+                                        <p>${startTime} - ${pause.end_time ? endText : 'En curso'}</p>
+                                        <p>${durationText}</p>
+                                    </div>
+                                </div>`;
 
         pausesContainer.appendChild(card);
       });
+
+
+
+      
 
       // 🔹 Agrega el sub-contenedor de pausas al contenedor de la fecha
       dateContainer.appendChild(pausesContainer);
@@ -803,24 +822,11 @@ toggleInput.addEventListener('change', () => {
           }
         }
 
-        function getLocalDateString(date) {
-          const d = new Date(date);
-          const year = d.getFullYear();
-          const month = String(d.getMonth() + 1).padStart(2, '0');
-          const day = String(d.getDate()).padStart(2, '0');
-          const localDateStr = `${year}-${month}-${day}`;
-
-          const today = new Date();
-          if (d.toDateString() === today.toDateString()) {
-            const localOffset = today.getTimezoneOffset();
-            const hondurasOffset = 360;
-            const totalOffset = (hondurasOffset - localOffset) * 60000;
-            const adjustedDate = new Date(today.getTime() + totalOffset);
-            return adjustedDate.toISOString().split('T')[0];
-          }
-
-          return localDateStr;
-        }
+       function getLocalDateString() {
+  return new Date().toLocaleDateString("sv", {
+    timeZone: "America/Tegucigalpa"
+  });
+}
 
         let isFiltering = false;
 
