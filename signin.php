@@ -6,12 +6,13 @@
     </form>
 </div>
 <script>
+  
     const UR_API = 'http://localhost/DataEntry/api/';
   // Check if user is already logged in
   document.addEventListener('DOMContentLoaded', () => {
     const user = localStorage.getItem('currentUser');
     if (user) {
-      window.location.href = 'dashboard.php';
+      window.location.href = 'onboarding.php';
     }
   });
 
@@ -38,7 +39,7 @@
        
         alert('Inicio de sesión exitoso');
         setTimeout(() => {
-          window.location.href = 'dashboard.php';
+          window.location.href = 'onboarding.php';
         }, 4000);
       } else {
         alert(data.message);

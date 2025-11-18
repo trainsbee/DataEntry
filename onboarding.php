@@ -25,9 +25,9 @@
                             </div>
 
                             <div class="box-toggle toggle-wrapper">
-                                <div class="toggle-text">
+                                <div class="toggle-text body-update">
                                     <h3>Hello (:</h3>
-                                    <p>Tu tiempo es optimo puedes crear pausas.</p>
+                                    <p class="message-time-pause" id="message-time-pause">Tu tiempo es optimo puedes crear pausas.</p>
                                 </div>
                                 <label class="toggle">
                                     <input class="toggle-checkbox" type="checkbox" id="pause-switch" onchange="togglePause()">
@@ -84,186 +84,13 @@
                     </div>
                         <div id="pause-list">
                             
-                            </div>
-                        <div class="box-stacked">
-                                
-
-                            <div class="stacked-header">
-                                <h3 class="date-header">Horas</h3>
-                            </div>
-                            <div class="stacked-item row-active-warning">
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <h3>Bathroom</h3>
-                                    </div>
-                                    <div class="info-value">
-                                        <p>Time</p>
-                                    </div>
-
-                                </div>
-                                <div class="info-row time">
-                                    <div class="info-label">
-                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
-                                    </div>
-                                    <div class="info-value">
-                                        <p>20:41:54 - In progress</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stacked-item">
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <h3>Bathroom</h3>
-                                    </div>
-                                    <div class="info-value">
-                                        <p>Time</p>
-                                        <p>Duration</p>
-                                    </div>
-
-                                </div>
-                                <div class="info-row time">
-                                    <div class="info-label">
-                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
-                                    </div>
-                                    <div class="info-value">
-                                        <p>20:41:54 - 20:46:41</p>
-                                        <p>4m 47s</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stacked-item">
-                                <div class="info-row">
-                                    <div class="info-label">
-                                        <h3>Bathroom</h3>
-                                    </div>
-                                    <div class="info-value">
-                                        <p>Time</p>
-                                        <p>Duration</p>
-                                    </div>
-
-                                </div>
-                                <div class="info-row time">
-                                    <div class="info-label">
-                                   &nbsp;   <!-- <span icon-data="clock"><i data-feather="clock"></i></span> -->
-                                    </div>
-                                    <div class="info-value">
-                                        <p>20:41:54 - 20:46:41</p>
-                                        <p>4m 47s</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <!-- Fin de la tabla -->
                     </div>
 <main class="main-content">
-        <div class="content-container">
-            <!-- Content Panel -->
-            <div class="content-panel">
-                <div class="panel-header">
-                    <h2 class="panel-title">Environment Status</h2>
-                    <!-- <button class="panel-action-btn">
-                        <i data-feather="more-horizontal"></i>
-                    </button> -->
-                </div>
-                
-                <div id="logs" class="tab-content">
+      
 
-          <!-- NAVBAR -->
-
-           
-               
-          <div class="form-container form-switch">
-    <div class="form-header">
-        <h2><i data-feather="pause"></i> Administrador de Pausas</h2>
-    </div>
-    <div class="form-body body-update">
-        <p id="message-time-pause">
-            Puedes crear tus pausas aquí, recuerda organizarte bien para que no te quedes sin pausa (:
-        </p>
-    </div>
-    <div class="form-footer" id="footer-switch">
-        <div class="form-group">
-            <label for="reason">Razón de la pausa</label>
-            <select id="reason" required>
-                <option value="" disabled selected>Selecciona una razón</option>
-                <option value="break">Break 15 minutos</option>
-                <option value="lunch">Almuerzo</option>
-                <option value="bathroom_outside">Baño afuera</option>
-                <option value="bathroom_office">Baño oficina</option>
-                <option value="meeting_manager">Reunión con gerente</option>
-                <option value="meeting_rrhh">Reunión con RRHH</option>
-                <option value="meeting_country_manager">Reunión con gerente de país</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label class="switch">
-                <input type="checkbox" >
-                <span class="slider"></span>
-            </label>
-            <span id="switch-status" class="switch-status inactive">Inactiva</span>
-        </div>
-    </div>
-</div>
-                  <div id="metrics" class="tab-content">
-                    <div class="metrics-container">
-                        <div class="metric-box">
-                            <h3 class="metric-title">Pausas</h3>
-                            <p class="metric-value"></p>
-                            <p class="metric-desc">Total de pausas</p>
-                        </div>
-                        <div class="metric-box">
-                            <h3 class="metric-title">Tiempo en pausa</h3>
-                            <p class="metric-value" ></p>
-                            <p class="metric-desc">Total de tiempo en pausa</p>
-                        </div>
-                        <div class="metric-box">
-                            <h3 class="metric-title">Tiempo restante</h3>
-                            <p class="metric-value"></p>
-                            <p class="metric-desc">Tiempo restante</p>
-                        </div>
-                    </div>
-                </div>
-     <div class="card-filter">
-    <div class="form-header">
-        <h3>Estadísticas por Fecha</h3>
-    </div>
-
-    <form class="filter-date range-container" id="filter-form">
-        <div class="form-body">
-            <div class="form-group">
-                <label for="start-date">Desde</label>
-                <input type="date" id="start-datee" value="<?php 
-                    $today = new DateTime('now', new DateTimeZone(TIMEZONE));
-                    echo $today->format('Y-m-d');
-                ?>">
-            </div>
-            <div class="form-group">
-                <label for="end-datee">Hasta</label>
-                <input type="date" id="end-date" value="<?php 
-                    $today = new DateTime('now', new DateTimeZone(TIMEZONE));
-                    echo $today->format('Y-m-d');
-                ?>">
-            </div>
-        </div>
-        <div class="form-footer">
-            <button type="submit" class="filter-buttone">
-                <i data-feather="filter"></i>
-                Filtrar
-            </button>
-        </div>
-    </form>
-</div>
-
-                <div id="logs" class="tab-content">
-                    
-                    <div class="logs-list" id="pause-list2">
-                       
-                    </div>
-                </div>
-
-</div>
-          <div class="card" hidden>
+          <div class="card">
                 <h3>Actividad <span id="user-name"></span> <span id="user-role"></span><span id="user-department"></span></h3>
               <div class="info-row">
                     <span class="info-label">Sesiones hoy:</span>
@@ -276,43 +103,27 @@
             </div>
    
  
-
-                </div>
-                 <!-- Sidebar -->
-            <aside class="sidebar">
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">Quick Actions</h3>
-                    <button class="sidebar-btn">
-                        <i data-feather="power"></i>
-                        <span>Wake Environment</span>
-                    </button>
-                    <button class="sidebar-btn">
-                        <i data-feather="refresh-cw"></i>
-                        <span>Refresh Status</span>
-                    </button>
-                </div>
-
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">Info</h3>
-                    <div class="info-item">
-                        <span class="info-label">Environment</span>
-                        <span class="info-value">production</span>
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Region</span>
-                        <span class="info-value">us-east-1</span>
-                    </div>
-                </div>
-            </aside>
-            </div>
-
-           
-        </div>
     </main>
                 </div>
             </div>
             <div class="col-span-1">
                 <div class="card">
+                  <div class="box-profile">
+                    <div class="box-header">
+                      <div class="particle-header">
+                        <img src="<?php echo API_PUBLIC ?>img/header-profile.jpg" alt="header-profile">
+                      </div>
+                    </div>
+                    <div class="box-body">
+                      <div class="profile-img">
+                        <img src="<?php echo API_PUBLIC ?>img/profile.png" alt="profile">
+                    </div>
+                    <div class="profile-info">
+                        <h3>@username</h3>
+                        <p>DATA ENTRY</p>
+                    </div>
+                    </div>
+                  </div>
                     <div class="card-temp">
                     <svg fill="none" class="nug nui nuk nva">
                         <defs>
@@ -509,14 +320,10 @@ toggleInput.addEventListener('change', () => {
       pauseSwitch.checked = isActive;
       
       if (isActive) {
-      //   switchStatus.textContent = 'Activa';
-        switchStatus.className = 'switch-status active';
-        switchStatus.textContent = 'Activa';
+     
         reasonSelect.disabled = true;
       } else {
-        // switchStatus.textContent = 'Inactiva';
-        switchStatus.className = 'switch-status inactive';
-        switchStatus.textContent = 'Inactiva';
+       
         reasonSelect.disabled = false;
         reasonSelect.value = '';
       }
@@ -561,7 +368,7 @@ toggleInput.addEventListener('change', () => {
         showLoading(false);
         const pauseList = document.getElementById('pause-list');
         pauseList.innerHTML = '<div class="error">Error: Sesión no iniciada. Por favor, inicia sesión nuevamente.</div>';
-        window.location.href = 'auth.php';
+        window.location.href = 'signin.php';
         return;
       }
 
@@ -897,7 +704,7 @@ toggleInput.addEventListener('change', () => {
           currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
           if (!currentUser) {
-            window.location.href = 'auth.php';
+            window.location.href = 'signin.php';
             return;
           }
 
@@ -948,6 +755,6 @@ toggleInput.addEventListener('change', () => {
 
         function logout() {
           localStorage.removeItem('currentUser');
-          window.location.href = router + 'auth.php';
+          window.location.href = 'signin.php';
         }
   </script>

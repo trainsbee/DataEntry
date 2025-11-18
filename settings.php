@@ -3,6 +3,9 @@
 const API_URL = 'http://localhost/DataEntry/api/';
 const API_PUBLIC = 'http://localhost/DataEntry/public/';
 
+const API_URL_NGROK = 'https://cb1343d91fc4.ngrok-free.app/api/';
+const API_PUBLIC_NGROK = 'https://cb1343d91fc4.ngrok-free.app/public/';
+
 // Configuración de zona horaria
 define('TIMEZONE', 'America/Tegucigalpa');
 

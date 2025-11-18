@@ -516,3 +516,41 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
 		border-color: #335890;
 	}
 }
+.box-header{
+    position: relative;
+    height: 10rem;
+}
+.particle-header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+/* temp */
+.switch-status {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.switch-status.active {
+  color: var(--warning);
+}
+
+.switch-status.inactive {
+  color: var(--clr-off);
+}
+
