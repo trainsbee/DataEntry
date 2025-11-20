@@ -111,12 +111,12 @@
                   <div class="box-profile">
                     <div class="box-header">
                       <div class="particle-header">
-                        <img src="<?php echo API_PUBLIC ?>img/header-profile.jpg" alt="header-profile">
+                        <img src="<?php echo API_PUBLIC ?>media/header-profile.jpg" alt="header-profile">
                       </div>
                     </div>
                     <div class="box-body">
                       <div class="profile-img">
-                        <img src="<?php echo API_PUBLIC ?>img/profile.png" alt="profile">
+                        <img src="<?php echo API_PUBLIC ?>media/brand_logo.jpg" alt="profile">
                     </div>
                     <div class="profile-info">
                         <h3>@username</h3>
@@ -159,6 +159,7 @@ toggleInput.addEventListener('change', () => {
   
 
     const API_URL = "<?php echo API_URL; ?>";
+let forceDisableSelect = false;
 
     const reasons = {
         BREAK: 'Break 15 minutos',
@@ -312,22 +313,25 @@ toggleInput.addEventListener('change', () => {
       }
     }
 
-    function updateSwitchState(isActive) {
-      const pauseSwitch = document.getElementById('pause-switch');
-      const switchStatus = document.getElementById('switch-status');
-      const reasonSelect = document.getElementById('select-reason');
+   function updateSwitchState(isActive) {
+    const pauseSwitch = document.getElementById('pause-switch');
+    const reasonSelect = document.getElementById('select-reason');
 
-      pauseSwitch.checked = isActive;
-      
-      if (isActive) {
-     
+    pauseSwitch.checked = isActive;
+
+    if (forceDisableSelect) {
         reasonSelect.disabled = true;
-      } else {
-       
+        return;
+    }
+
+    if (isActive) {
+        reasonSelect.disabled = true;
+    } else {
         reasonSelect.disabled = false;
         reasonSelect.value = '';
-      }
     }
+}
+
 
     function updatePauseControls(hasActivePause) {
       updateSwitchState(hasActivePause);
@@ -460,8 +464,9 @@ toggleInput.addEventListener('change', () => {
         bodyUpdate.classList.add('bg-body-update-danger');
         totalPauseElementTwo.className = 'total-pause-time-two clr-danger';
         totalPauseElementTwo.textContent = `Excediste el tiempo de pausa: ${totalPauseTime} - Por favor, detén la pausa`;
+        forceDisableSelect = true;
+        document.querySelector("#select-reason").disabled = true;
 
-        document.getElementById('footer-switch').style.display = 'none';
       }
 
 

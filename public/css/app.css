@@ -521,14 +521,21 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
     height: 10rem;
 }
 .particle-header{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+   height: 10rem;
 }
-
-
+.particle-header img{
+  object-fit: cover;
+}
+.profile-img{
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-primary);
+}
+.profile-img img{
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 
 
