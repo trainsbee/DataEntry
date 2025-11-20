@@ -527,18 +527,25 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
   object-fit: cover;
 }
 .profile-img{
-  width: 10rem;
-  height: 10rem;
-  border-radius: 50%;
-  border: 1px solid var(--border-primary);
+       width: 7rem;
+    height: 7rem;
+    top: -5rem;
+    left: 1rem;
+    position: absolute;
+    border-radius: 100%;
+    border: 3px solid #d3d5defc;
 }
 .profile-img img{
-  border-radius: 50%;
+  border-radius: 100%;
   object-fit: cover;
 }
 
-
-
+.profile-info{
+        padding-top: 10rem;
+}
+.box-profile .box-body{
+    position: relative;
+}
 
 
 

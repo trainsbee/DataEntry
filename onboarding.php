@@ -116,7 +116,7 @@
                     </div>
                     <div class="box-body">
                       <div class="profile-img">
-                        <img src="<?php echo API_PUBLIC ?>media/brand_logo.jpg" alt="profile">
+                        <img src="<?php echo API_PUBLIC ?>media/avatar.jpg" alt="profile">
                     </div>
                     <div class="profile-info">
                         <h3>@username</h3>
