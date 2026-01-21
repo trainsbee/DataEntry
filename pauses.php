@@ -1,156 +1,112 @@
 <?php include 'settings.php';?>
-<?php include 'template/header.php';?>
-<?php include 'template/nav.php';?>
+<?php include 'template/ui_header.php';?>
+
 <?php require_once __DIR__ . '/supabase/users.php';?>
 <?php $users_json = json_encode($users);?>
 
- <div class="card" hidden>
-         
-  <div class="profile navbar-brand">
-    <p>Perfil</p>
-  </div>
-
-                <h3>Actividad <span id="user-name"></span> <span id="user-role"></span><span id="user-department"></span></h3>
-              <div class="info-row">
-                    <span class="info-label">Sesiones hoy:</span>
-                    <span class="info-value">342</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Nuevos registros:</span>
-                    <span class="info-value">28</span>
-                </div>
+ <div class="main-content">
+  <div class="container">
+    <div class="grid grid-cols-1 gap-4">
+      <div class="col-span-1">
+        <div class="card">
+          <div class="box-date-range">
+              <div class="date-range">
+                  <div class="date-range-item input-wrapper">
+                      <input type="date" id="start-date" value="<?php 
+                                  $today = new DateTime('now', new DateTimeZone(TIMEZONE));
+                                  echo $today->format('Y-m-d');
+                              ?>">
+                  </div>
+                  <div class="date-range-item input-wrapper">
+                      <input type="date" id="end-date" value="<?php 
+                                  $today = new DateTime('now', new DateTimeZone(TIMEZONE));
+                                  echo $today->format('Y-m-d');
+                              ?>">
+                  </div>
+                  <div class="date-range-item input-wrapper">
+                      <button class="btn btn-default filter-button" onclick="loadEmployees()" type="button">
+                          <span class="icon-filter" icon-data="filter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></span>
+                          <span class="loader_circle"></span>
+                      </button>
+                  </div>
+              </div>
+          </div>
+          <div class="card-body">
+            <div class="box-stats">
+              <div class="stats-item">
+                  <h3>Pausas</h3>
+                  <p id="total-pauses"></p>
+              </div>
+              <div class="stats-item">
+                  <h3>Tiempo</h3>
+                  <p id="total-consumed-time"></p>
+              </div>
+              <div class="stats-item">
+                  <h3>Activas</h3>
+                  <p id="total-pause-active"></p>
+              </div>
             </div>
-   <!-- Main Content -->
-<main class="main-content">
-    <div class="content-container">
-        <!-- Content Panel -->
-        <div class="content-panel">
-            <div class="panel-header">
-                <h2 class="panel-title">Gestión de Pausas</h2>
+
+<!--==== Fin de la card ===-->
+          <div class="table-container">
+            <div class="table-header">
+              <h3><i data-feather="clock"></i> Pausas Activas</h3>
             </div>
-
-            <div id="logs" class="tab-content">
-
-                <!-- FILTRO DE FECHAS -->
-                <div class="form-container">
-                    <div class="form-header">
-                        <h3><i data-feather="filter"></i> Filtro de Fechas</h3>
-                    </div>
-                    <div class="form-body">
-                        <div class="form-group">
-                            <label>Desde</label>
-                            <input type="date" id="start-date" value="<?php 
-                                $today = new DateTime('now', new DateTimeZone(TIMEZONE));
-                                echo $today->format('Y-m-d');
-                            ?>">
-                        </div>
-                        <div class="form-group">
-                            <label>Hasta</label>
-                            <input type="date" id="end-date" value="<?php 
-                                $today = new DateTime('now', new DateTimeZone(TIMEZONE));
-                                echo $today->format('Y-m-d');
-                            ?>">
-                        </div>
-                        <div class="form-group">
-                            <label>Acción</label>
-                            <button type="button" class="filter-button" onclick="loadEmployees()">
-                                <i data-feather="filter"></i> Filtrar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RESUMEN ESTADÍSTICAS -->
-                <div class="metrics-container">
-                    <div class="metric-box">
-                        <h4 id="total-pauses">0</h4>
-                        <p>Total Pausas</p>
-                    </div>
-                    <div class="metric-box">
-                        <h4 id="total-consumed-time">00:00:00</h4>
-                        <p>Tiempo Consumido</p>
-                    </div>
-                    <div class="metric-box">
-                        <h4 id="total-pause-active">0</h4>
-                        <p>Pausas Activas</p>
-                    </div>
-                </div>
-
-                <!-- PAUSAS ACTIVAS -->
-                <div class="table-container">
-                    <div class="table-header">
-                        <h3><i data-feather="clock"></i> Pausas Activas</h3>
-                    </div>
-                    <div class="table-wrapper">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Empleado</th>
-                                    <th>Departamento</th>
-                                    <th>Inicio</th>
-                                    <th>Transcurrido</th>
-                                    <th>Razón</th>
-                                </tr>
-                            </thead>
-                            <tbody id="active-pauses-list"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- TABLA DE EMPLEADOS -->
-                <div class="table-container">
-                    <div class="table-header">
-                        <h3><i data-feather="users"></i> Empleados</h3>
-                    </div>
-                    <div class="table-wrapper">
-                        <table class="table" id="employees-table">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>ID</th>
-                                    <th>Pausas Activas</th>
-                                    <th>Total Pausas</th>
-                                    <th>Tiempo Total</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="employees-list">
-                                <tr><td colspan="6">Cargando...</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th>Empleado</th>
+                        <th>Departamento</th>
+                        <th>Inicio</th>
+                        <th>Transcurrido</th>
+                        <th>Razón</th>
+                    </tr>
+                </thead>
+                <tbody id="active-pauses-list"></tbody>
+              </table>
             </div>
+          </div>
+
+              <!-- TABLA DE EMPLEADOS -->
+          <div class="table-container">
+            <div class="table-header">
+              <h3><i data-feather="users"></i> Empleados</h3>
+            </div>
+            <div class="table-wrapper">
+              <table class="table" id="employees-table">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>ID</th>
+                    <th>Pausas Activas</th>
+                    <th>Total Pausas</th>
+                    <th>Tiempo Total</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="employees-list">
+                  <tr><td colspan="6">Cargando...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Acciones Rápidas</h3>
-                <button class="sidebar-btn">
-                    <i data-feather="power"></i>
-                    <span>Despertar Entorno</span>
-                </button>
-                <button class="sidebar-btn">
-                    <i data-feather="refresh-cw"></i>
-                    <span>Actualizar Estado</span>
-                </button>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Información</h3>
-                <div class="info-item">
-                    <span class="info-label">Entorno</span>
-                    <span class="info-value">production</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Región</span>
-                    <span class="info-value">us-east-1</span>
-                </div>
-            </div>
-        </aside>
+      </div>
+      <div class="col-span-1">
+          <div class="profile navbar-brand">
+                        <h3>Actividad <span id="user-name"></span> <span id="user-role"></span><span id="user-department"></span></h3>
+ <h2 class="panel-title">Gestión de Pausas</h2>
+          </div>
+      </div>
+      <div class="col-span-1">
+        
+      </div>
+      
     </div>
-</main>
+  </div>
+ </div>
+
 <div class="modal-overlay" id="pauses-modal">
     <div class="modal-center">
         <div class="modal-content">
@@ -216,14 +172,18 @@
     let currentEmployeeId = '';
 
     const reasons = {
-      break: 'Break 15 minutos',
-      lunch: 'Almuerzo',
-      bathroom_outside: 'Baño afuera',
-      bathroom_office: 'Baño oficina',
-      meeting_manager: 'Reunión con gerente',
-      meeting_rrhh: 'Reunión con RRHH',
-      meeting_country_manager: 'Reunión con gerente de pais',
-    };
+        LUNCH: 'Lunch',
+        BREAK: 'Break 15 minutes',
+        BATHROOM_OFFICE: 'Bathroom Office',
+        BATHROOM_HOME: 'Bathroom Home',
+
+        AUTHORIZED_PAUSE: 'Authorized pause',
+        SUPERVISOR_MEETING: 'Supervisor meeting',
+        MEETING_IT: 'Meeting IT',
+        DIRECTOR_MEETING: 'Director meeting',
+        TRAINING: 'Training',
+        MEETING_RRHH: 'Meeting RRHH',
+    }
 
     // Check authentication
     function checkAuth() {
@@ -256,14 +216,14 @@
         }
         
         if (!userFound || !isAdmin) {
-          window.location.href = 'dashboard.php';
+          window.location.href = 'signin.php';
           return false;
         }
         
         return true;
       } catch (e) {
         console.error('Error parsing user data:', e);
-        window.location.href = 'auth.php';
+        window.location.href = 'signin.php';
         return false;
       }
     }
@@ -271,7 +231,7 @@
     // Logout function
     function logout() {
       localStorage.removeItem('currentUser');
-      window.location.href = 'auth.php';
+      window.location.href = 'signin.php';
     }
 
     // Toggle navbar for mobile
@@ -585,24 +545,21 @@ function secondsToTime(totalSeconds) {
         const formattedPauseTime = `${hours}h ${minutes}m ${seconds}s`;
         
         document.getElementById('pauses-summary').innerHTML = `
-
-        <div class="metrics-container">
                         <div class="metric-box">
-                            <h3 class="metric-title">Costs Saved</h3>
+                            <h3 class="metric-title">Pausas</h3>
                             <p class="metric-value" id="total-pauses"> ${allPauses.length}</p>
                             <p class="metric-desc">In the last 7 days</p>
                         </div>
                         <div class="metric-box">
-                            <h3 class="metric-title">Hibernations</h3>
-                            <p class="metric-value" id="total-pause-time">${activePauses.length}</p>
+                            <h3 class="metric-title">Tiempo</h3>
+                            <p class="metric-value" id="total-pause-time">${formattedPauseTime}</p>
                             <p class="metric-desc">This month</p>
                         </div>
                         <div class="metric-box">
-                            <h3 class="metric-title">Avg Duration</h3>
-                            <p class="metric-value" id="total-remaining-time">${formattedPauseTime}</p>
+                            <h3 class="metric-title">Activas</h3>
+                            <p class="metric-value" id="total-remaining-time">${activePauses.length}</p>
                             <p class="metric-desc">Per hibernation</p>
                         </div>
-                    </div>
         `;
         
         if (activePauses.length === 0) {

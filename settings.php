@@ -1,5 +1,6 @@
 <!-- Settings -->
 <?php
+const API_BASE = 'http://localhost/DataEntry/';
 const API_URL = 'http://localhost/DataEntry/api/';
 const API_PUBLIC = 'http://localhost/DataEntry/public/';
 

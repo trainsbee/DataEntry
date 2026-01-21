@@ -10,18 +10,24 @@
                         <div class="control-pause">
                             <div class="box-select select-wrapper">
                                 <label for="select-reason" class="select-label">Reason</label>
-                                <select name="" id="select-reason">
-                                    <option value="">Select a reason</option>
-                                    <option value="LUNCH">Lunch</option>
-                                    <option value="BREAK">Break</option>
-                                    <option value="DIRECTOR_MEETING">Director meeting</option>
-                                    <option value="TRAINING">Training</option>
-                                    <option value="SUPERVISOR_MEETING">Supervisor meeting</option>
-                                    <option value="BATHROOM_OUTSIDE">Bathroom Outside</option>
-                                    <option value="BATHROOM_OFFICE">Bathroom Office</option>
-                                    <option value="OTHER">Other</option>
-                                </select>
-                                
+                               <select name="" id="select-reason">
+                                <option value="">Select a reason</option>
+
+                                <option value="LUNCH">Lunch</option>
+                                <option value="BREAK">Break</option>
+                                <option value="BATHROOM_OFFICE">Bathroom (office)</option>
+                                <option value="BATHROOM_HOME">Bathroom (home)</option>
+
+                                <option value="AUTHORIZED_PAUSE">Authorized pause</option>
+                                <option value="MEETING_SUPERVISOR">Meeting with supervisor</option>
+                                <option value="MEETING_IT">Meeting with IT</option>
+                                <option value="MEETING_DIRECTOR">Meeting with director</option>
+                                <option value="TRAINING">Training</option>
+                                <option value="MEETING_RRHH">Meeting with HR</option>
+
+                                <option value="OTHER">Other</option>
+                              </select>
+
                             </div>
 
                             <div class="box-toggle toggle-wrapper">
@@ -65,23 +71,25 @@
                         <!-- Fin de la tabla -->
                         <div class="box-stats">
                             <div class="stats-item">
-                                <h3>Horas</h3>
+                                <h3>Pausas</h3>
                                 <p id="total-pauses"></p>
                             </div>
                             <div class="stats-item">
-                                <h3>Minutos</h3>
+                                <h3>Tiempo</h3>
                                 <p id="total-pause-time"></p>
                             </div>
                             <div class="stats-item">
-                                <h3>Segundos</h3>
+                                <h3>Tiempo restante</h3>
                                 <p id="total-remaining-time"></p>
                             </div>
                         </div>
+
                         <div class="loader">
-                      <span class="spinner1"></span>
-                      <span class="spinner2"></span>
-                      <span class="spinner3"></span>
-                    </div>
+                            <span class="spinner1"></span>
+                            <span class="spinner2"></span>
+                            <span class="spinner3"></span>
+                        </div>
+                        
                         <div id="pause-list">
                             
                         </div>
@@ -161,15 +169,20 @@ toggleInput.addEventListener('change', () => {
     const API_URL = "<?php echo API_URL; ?>";
 let forceDisableSelect = false;
 
-    const reasons = {
-        BREAK: 'Break 15 minutos',
-        LUNCH: 'Almuerzo',
-        BATHROOM_OUTSIDE: 'Baño afuera',
-        BATHROOM_OFFICE: 'Baño oficina',
-        MEETING_MANAGER: 'Reunión con gerente',
-        MEETING_RRHH: 'Reunión con RRHH',
-        MEETING_COUNTRY_MANAGER: 'Reunión con gerente de país',
-    }
+  const reasons = {
+    LUNCH: 'Lunch',
+    BREAK: 'Break',
+    BATHROOM_OFFICE: 'Bathroom (office)',
+    BATHROOM_HOME: 'Bathroom (home)',
+
+    AUTHORIZED_PAUSE: 'Authorized pause',
+    MEETING_SUPERVISOR: 'Meeting with supervisor',
+    MEETING_IT: 'Meeting with IT',
+    MEETING_DIRECTOR: 'Meeting with director',
+    TRAINING: 'Training',
+    MEETING_RRHH: 'Meeting with HR',
+}
+
 
     let currentPause = null;
     let currentUser = null;
@@ -391,15 +404,17 @@ let forceDisableSelect = false;
         const data = await response.json();
 
         const importantPauses = data.data.filter(pause =>
-          pause.reason === 'BATHROOM_OUTSIDE' || pause.reason === 'BREAK' || pause.reason === 'BATHROOM_OFFICE'
+          pause.reason === 'LUNCH' || pause.reason === 'BREAK' || pause.reason === 'BATHROOM_OFFICE' || pause.reason === 'BATHROOM_HOME'
         );
 
+        console.log(data);
         const hondurasDate = new Date().toLocaleDateString("es-HN", {
           timeZone: "America/Tegucigalpa",
           year: "numeric",
           month: "2-digit",
           day: "2-digit"
         });
+        console.log(hondurasDate);
         const parts = hondurasDate.split("/");
         const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
@@ -407,6 +422,7 @@ let forceDisableSelect = false;
           pause.end_time != null &&
           pause.start_time.startsWith(formattedDate)
         );
+        console.log(todayPauses);
 
         const totalSeconds = todayPauses.reduce(
           (total, pause) => total + Math.round(getSecondsDiff(pause.start_time, pause.end_time)),
@@ -758,8 +774,5 @@ let forceDisableSelect = false;
           }
         }
 
-        function logout() {
-          localStorage.removeItem('currentUser');
-          window.location.href = 'signin.php';
-        }
+        
   </script>

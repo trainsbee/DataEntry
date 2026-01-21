@@ -568,3 +568,248 @@ background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 12 12' fill='%2
   color: var(--clr-off);
 }
 
+/* ====================== TABLAS MEJORADAS ====================== */
+.table-container {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.table-header {
+  padding: 1.6rem 2rem;
+  background-color: #1e2939;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.table-header h3 {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--text-accent);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.4rem;
+}
+
+.table thead {
+  background-color: #1e2939;
+}
+
+.table thead th {
+  padding: 1.4rem 1.6rem;
+  text-align: left;
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.table tbody tr {
+  transition: var(--transition);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.table tbody tr:hover {
+  background-color: #1e2939;
+}
+
+.table tbody td {
+  padding: 1.4rem 1.6rem;
+  color: var(--text-primary);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Estados de color */
+.clr-danger { color: #ff6b6b; font-weight: 500; }
+.clr-warning { color: #f0b100; font-weight: 500; }
+.clr-success { color: #51cf66; font-weight: 500; }
+
+/* Botones en tabla */
+.table .btn-primary {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.3rem;
+  height: auto;
+}
+
+/* Celdas clicables */
+.clickable-row {
+  cursor: pointer;
+}
+.clickable-row:hover {
+  background-color: #615fff1a !important;
+}
+
+/* ====================== MODAL LATERAL ====================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(16, 24, 40, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-center {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 480px;
+  max-width: 90vw;
+  height: 100%;
+  background-color: var(--bg-secondary);
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow-y: auto;
+  border-left: 1px solid var(--border-primary);
+}
+
+.modal-center.show {
+  right: 0;
+}
+
+.modal-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  padding: 2rem;
+  background-color: #1e2939;
+  border-bottom: 1px solid var(--border-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-accent);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.8rem;
+  border-radius: 50%;
+  transition: var(--transition);
+  color: var(--text-primary);
+}
+
+.close-btn:hover {
+  background-color: #615fff33;
+  color: var(--text-accent);
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Metrics en modal */
+.metrics-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.metric-box {
+  background-color: #1e2939;
+  padding: 1.6rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-primary);
+  text-align: center;
+}
+
+.metric-title {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--text-accent);
+  margin: 0;
+}
+
+.metric-desc {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  opacity: 0.8;
+  margin-top: 0.4rem;
+}
+
+/* Responsive para modal en móviles */
+@media (max-width: 768px) {
+  .modal-center {
+      width: 100%;
+      max-width: 100%;
+  }
+  
+  .metrics-container {
+      grid-template-columns: 1fr;
+  }
+  
+  .metric-box {
+      padding: 1.8rem;
+  }
+  
+  .metric-value {
+      font-size: 2.8rem;
+  }
+}
+
+/* Scrollbar personalizada en modal */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #615fff33;
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #615fff66;
+}

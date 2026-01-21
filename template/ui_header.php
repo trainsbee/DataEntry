@@ -71,6 +71,13 @@
         grid-template-columns: 2fr 1fr;
         gap: 1.5rem;
     }
+    .grid-cols-1{
+        grid-template-columns: 1fr;
+    }
+    .grid-cols-2{
+        grid-template-columns: 2fr 1fr;
+    }
+    
 
     .card{
         background-color: var(--bg-secondary);
@@ -127,10 +134,9 @@
             </div>
             <nav aria-label="Main Navigation" class="nav-container">
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="/dashboard">Dashboard</a></li>
-                    <li class="nav-item"><a href="/onboarding">Onboarding</a></li>
-                    <li class="nav-item"><a href="/report">Reportes</a></li>
-                    <li class="nav-item"><a href="/logout">Cerrar Sesión</a></li>
+                    <li class="nav-item"><a href="<?php echo API_BASE ?>onboarding.php">Onboarding</a></li>
+                    <li class="nav-item"><a href="<?php echo API_BASE ?>pauses.php">Pausas</a></li>
+                    <li class="nav-item"><button onclick="logout()">Cerrar Sesión</button></li>
                 </ul>
             </nav>
 
